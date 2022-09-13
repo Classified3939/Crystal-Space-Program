@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import {IgtFeature} from "@/components/util/igt-feature";
+import IgtFeature from "@/components/util/igt-feature";
 import {RedCrystalProducer} from "@/my-game/features/crystal-producer/RedCrystalProducer";
-import IgtUpgrade from "@/components/tools/upgrades/igt-descrete-upgrade";
+import IgtUpgrade from "@/components/tools/upgrades/igt-discrete-upgrade";
 
 export default{
     name: "crystal-producer",
@@ -24,7 +24,7 @@ export default{
     },
     computed:{
         workerUpgrade(){
-            return this.crystalProducerFeature.workerUpgrade();
+            return this.crystalProducerFeature.workerUpgrade;
         }
     },
 }

@@ -7,7 +7,7 @@
 
       <igt-tab name="Main screen" :selected="true">
         <igt-wallet :wallet-feature="game.features.wallet"></igt-wallet>
-        <crystal-producer :crystal-producer-feature="game.features.crystalProducer"></crystal-producer>
+        <crystal-producer :crystal-producer-feature="game.features.redCrystalProducer"></crystal-producer>
       </igt-tab>
 
       <igt-tab name="Settings">
@@ -43,12 +43,12 @@ import IgtDeveloperPanel from "@/components/developer-panel/igt-developer-panel"
 import IgtSidebarCategory from "@/components/util/sidebar/igt-sidebar-category";
 import IgtSidebarExternalLink from "@/components/util/sidebar/igt-sidebar-external-link";
 import IgtSettings from "@/components/features/settings/igt-settings";
-import IgtWallet from "@/components/features/wallet/igt-wallet"
-import RedCrystalProducer from "@/components/features/crystal-producer/crystal-producer"
+import IgtWallet from "@/components/features/wallet/igt-wallet";
+import crystalProducer from "@/components/features/crystal-producer/crystal-producer";
 
 export default {
   components: {
-    RedCrystalProducer,
+    crystalProducer,
     IgtSettings,
     IgtSidebarExternalLink,
     IgtSidebarCategory,

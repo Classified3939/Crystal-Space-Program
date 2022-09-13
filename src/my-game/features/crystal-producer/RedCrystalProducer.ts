@@ -1,9 +1,12 @@
-import {AddWallet, ContinuousUpgrade, Currency, IgtFeature, IgtWallet, SaveData} from "incremental-game-template";
+import {AddWallet, ContinuousUpgrade, Currency, IgtFeature, IgtWallet} from "incremental-game-template";
 import {CurrencyType} from "@/my-game/features/wallet/CurrencyType";
 import {MyFeatures} from "@/my-game/MyFeatures";
+import {CrystalProducerSaveData} from "@/my-game/features/crystal-producer/CrystalProducerSaveData"
 
 export class RedCrystalProducer extends AddWallet(IgtFeature){
+
     workerUpgrade: ContinuousUpgrade;
+
     constructor() {
         super('redCrystal');
         this.workerUpgrade = new ContinuousUpgrade('worker','redCrystal',"Workers",100,
@@ -26,11 +29,13 @@ export class RedCrystalProducer extends AddWallet(IgtFeature){
         this._wallet.gainCurrency(currency);
     }
 
-    load(data: SaveData): void{
-        //Empty
+    load(data: CrystalProducerSaveData): void{
+        this.workerUpgrade.level = data.redLevel ?? 0;
     }
 
-    save(): SaveData{
-        return {};
+    save(): CrystalProducerSaveData{
+        return {
+            redLevel: this.workerUpgrade.level,
+        };
     }
 }
