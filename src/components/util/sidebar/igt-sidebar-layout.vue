@@ -1,25 +1,27 @@
 <template>
   <div>
-    <div class="flex h-screen bg-gray-100 dark:bg-gray-800 font-roboto">
+    <div class="flex h-screen bg-csp-gray-400 dark:bg-csp-gray font-roboto">
       <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false"
            class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"></div>
 
       <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-           class="fixed z-30 inset-y-0 left-0 w-60 transition duration-300 transform bg-white dark:bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 shadow-xl">
+           class="fixed z-30 inset-y-0 left-0 w-60 transition duration-300 transform bg-white dark:bg-csp-blue overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 shadow-xl">
+        <div class="flex items-center justify-center my-4">
+            <img width="102" height="102" :src="require(`@/assets/crystal-shine.png`)" alt="logo">
+        </div>
         <div class="flex items-center justify-center mt-2">
-          <div class="flex items-center p-2 mx-2">
-            <img class="h-12 w-12" :src="require(`@/assets/logo.png`)" alt="logo">
-            <span
-                class="text-gray-800 dark:text-white text-xl font-semibold text-center">{{ title }}</span>
-          </div>
+          <span class="text-gray-800 dark:text-white text-xl font-semibold text-center">{{ title }}</span>
         </div>
 
-        <nav class="flex flex-col mt-10 px-4 text-left">
+
+        <nav class="flex flex-col mt-3 px-4 text-left">
 
           <a class="flex flex-row w-full justify-between items-center tab-entry dark:text-white" :key="'tab-'+index"
              v-for="(tab, index) in tabs"
-             :class="{ 'bg-gray-200 dark:text-gray-700': tab.isActive,
-             'hover:text-gray-700 hover:bg-gray-200 cursor-pointer dark:hover:text-gray-700': !tab.isCategory }"
+             :class="{ 'bg-csp-grass dark:text-white': tab.isActive,
+             'bg-csp-orange dark:text-black': !tab.isCategory && !tab.isActive && tab.isAlert,
+             'hover:text-gray-700 hover:bg-gray-200 cursor-pointer dark:hover:text-gray-700': !tab.isCategory && !tab.isActive
+              }"
              :href="tab.link" target="_blank"
              @click="tab.canSelect ? selectTab(tab) : ''"
           >
@@ -104,6 +106,9 @@ export default {
       this.tabs.forEach(tab => {
         tab.isActive = (tab.name === selectedTab.name);
       });
+      if(selectedTab.isAlert == true){
+        selectedTab.setAlert(false);
+      }
     }
   }
 

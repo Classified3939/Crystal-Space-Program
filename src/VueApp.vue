@@ -1,33 +1,47 @@
 <template>
   <div :class="{'dark': darkMode}">
     <igt-notifications></igt-notifications>
-    <igt-sidebar title="Incremental Game Template">
+    <igt-sidebar title="Crystal Space Program" :header-class="'bg-csp-teal'">
 
       <igt-sidebar-category name="Features"></igt-sidebar-category>
 
-      <igt-tab name="Main screen" :selected="true">
+      <igt-tab name="Workers" :selected="true">
         <igt-wallet :wallet-feature="game.features.wallet"></igt-wallet>
-        <crystal-producer :crystal-producer-feature="game.features.redCrystalProducer"></crystal-producer>
+        <crystal-click :crystal-producer-feature="game.features.redCrystalProducer"></crystal-click>
       </igt-tab>
 
+      <igt-tab name="Combat">
+      </igt-tab>
+
+      <igt-tab name="Construction" :unlocked="false" :hasAlert="true">
+      </igt-tab>
+
+      <igt-tab name="Crafting" :unlocked="false">
+      </igt-tab>
+
+      <igt-tab name="Trade" :unlocked="false">
+      </igt-tab>
+
+      <igt-tab name="Research" :unlocked="false">
+      </igt-tab>
+
+      <igt-tab name="Transport" :unlocked="false">
+      </igt-tab>
+
+      <igt-tab name="Automation">
+      </igt-tab>
+
+      <igt-tab name="Challenges" :unlocked="false">
+      </igt-tab>
+
+      <igt-sidebar-category name="Other"></igt-sidebar-category>
       <igt-tab name="Settings">
         <igt-settings :settings-feature="game.features.settings"></igt-settings>
       </igt-tab>
 
-      <igt-sidebar-category name="Other"></igt-sidebar-category>
-
       <igt-tab name="Developer Panel" v-if="showDevPanel">
         <igt-developer-panel :developer-panel="game.getDeveloperPanel()"></igt-developer-panel>
       </igt-tab>
-
-      <igt-sidebar-category name="Socials"></igt-sidebar-category>
-      <igt-sidebar-external-link name="Discord" link="https://discord.gg/WUYDqct2Ef"
-                                 image="socials/discord.png"></igt-sidebar-external-link>
-      <igt-sidebar-external-link name="Documentation"
-                                 link="https://123ishatest.github.io/igt-docs"
-                                 image="socials/docusaurus.svg"></igt-sidebar-external-link>
-      <igt-sidebar-external-link name="GitHub" link="https://github.com/123ishaTest/igt-library"
-                                 image="socials/github.png"></igt-sidebar-external-link>
     </igt-sidebar>
 
   </div>
@@ -44,19 +58,19 @@ import IgtSidebarCategory from "@/components/util/sidebar/igt-sidebar-category";
 import IgtSidebarExternalLink from "@/components/util/sidebar/igt-sidebar-external-link";
 import IgtSettings from "@/components/features/settings/igt-settings";
 import IgtWallet from "@/components/features/wallet/igt-wallet";
-import crystalProducer from "@/components/features/crystal-producer/crystal-producer";
+import IgtTabs from "@/components/util/igt-tabs";
+import crystalClick from "@/components/features/crystal-producer/crystal-click";
 
 export default {
   components: {
-    crystalProducer,
+    IgtSidebar,
+    crystalClick,
     IgtSettings,
-    IgtSidebarExternalLink,
-    IgtSidebarCategory,
     IgtDeveloperPanel,
     IgtNotifications,
     IgtTab,
     IgtWallet,
-    IgtSidebar,
+    IgtSidebarCategory
   },
   data() {
     return {

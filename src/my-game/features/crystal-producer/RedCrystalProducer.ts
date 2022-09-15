@@ -1,41 +1,29 @@
-import {AddWallet, ContinuousUpgrade, Currency, IgtFeature, IgtWallet} from "incremental-game-template";
+import {AddWallet, ContinuousUpgrade, Currency, IgtFeature, IgtWallet, SaveData} from "incremental-game-template";
 import {CurrencyType} from "@/my-game/features/wallet/CurrencyType";
 import {MyFeatures} from "@/my-game/MyFeatures";
-import {CrystalProducerSaveData} from "@/my-game/features/crystal-producer/CrystalProducerSaveData"
+import { CrystalClicker} from "@/my-game/features/crystal-producer/CrystalClick";
+import { ClickBonusSaveData } from "@/components/tools/clickers/ClickBonusSaveData";
+import { AbstractCrystalClickerFeature } from "./AbstractCrystalClickerFeature";
+import { CspAddWallet } from "@/components/mixins/CspAddWallet";
 
-export class RedCrystalProducer extends AddWallet(IgtFeature){
+export class RedCrystalProducer extends CspAddWallet(IgtFeature){
 
-    workerUpgrade: ContinuousUpgrade;
+    clicker: CrystalClicker;
 
     constructor() {
         super('redCrystal');
-        this.workerUpgrade = new ContinuousUpgrade('worker','redCrystal',"Workers",100,
-            level => {
-                return level + 1;
-            },
-            level => {
-                return new Currency(20 * Math.pow(level + 1, 1.4), CurrencyType.redCrystal);
-            },
-        )
+        this.clicker = new CrystalClicker('redMine', "Mine", "Red Crystals", CurrencyType.redCrystal)
     }
 
     initialize(features: MyFeatures){
         this._wallet = features.wallet;
     }
 
-    update(delta: number){
-        const crystalsToGain = this.workerUpgrade.getBonus();
-        const currency = new Currency(crystalsToGain * delta, CurrencyType.redCrystal);
-        this._wallet.gainCurrency(currency);
+    load(data: SaveData): void{
+        //empty
     }
 
-    load(data: CrystalProducerSaveData): void{
-        this.workerUpgrade.level = data.redLevel ?? 0;
-    }
-
-    save(): CrystalProducerSaveData{
-        return {
-            redLevel: this.workerUpgrade.level,
-        };
+    save(): SaveData{
+        return {};
     }
 }

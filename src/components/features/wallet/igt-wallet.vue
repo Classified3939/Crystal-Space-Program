@@ -1,6 +1,6 @@
 <template>
   <igt-feature>
-    <p>I have {{redCrystal | numberFormat}} Red Crystals</p>
+    <p class="text-white">I have {{redCrystal | numberFormat}} Red Crystals</p>
   </igt-feature>
 </template>
 
