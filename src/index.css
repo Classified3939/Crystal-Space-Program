@@ -19,7 +19,7 @@
 
 
 .feature-tab {
-    @apply p-4;
+    @apply px-4 py-3;
 }
 
 .btn {
@@ -54,4 +54,8 @@
 
 .btn-red {
     @apply text-white bg-red-500 hover:bg-red-600;
+}
+
+.btn-purple {
+    @apply text-white bg-purple-500 hover:bg-purple-600;
 }

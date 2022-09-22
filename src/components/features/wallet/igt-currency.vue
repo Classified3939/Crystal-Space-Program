@@ -8,7 +8,7 @@
     </div>
     <span v-else>{{ currency.type }}</span>
 
-    <span v-if="!textFirst" class="ml-1"><span v-if="negative">-</span>{{ currency.amount }}</span>
+    <span v-if="!textFirst" class="ml-1"><span v-if="negative">-</span>{{ currency.amount | numberFormat }}</span>
 
   </div>
 </template>

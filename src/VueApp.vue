@@ -1,37 +1,17 @@
 <template>
   <div :class="{'dark': darkMode}">
     <igt-notifications></igt-notifications>
-    <igt-sidebar title="Crystal Space Program" :header-class="'bg-csp-teal'">
+    <igt-sidebar title="Crystal Space Program">
 
       <igt-sidebar-category name="Features"></igt-sidebar-category>
 
-      <igt-tab name="Workers" :selected="true">
-        <igt-wallet :wallet-feature="game.features.wallet"></igt-wallet>
-        <crystal-click :crystal-producer-feature="game.features.redCrystalProducer"></crystal-click>
-      </igt-tab>
-
-      <igt-tab name="Combat">
-      </igt-tab>
-
-      <igt-tab name="Construction" :unlocked="false" :hasAlert="true">
-      </igt-tab>
-
-      <igt-tab name="Crafting" :unlocked="false">
-      </igt-tab>
-
-      <igt-tab name="Trade" :unlocked="false">
-      </igt-tab>
-
-      <igt-tab name="Research" :unlocked="false">
-      </igt-tab>
-
-      <igt-tab name="Transport" :unlocked="false">
-      </igt-tab>
-
-      <igt-tab name="Automation">
-      </igt-tab>
-
-      <igt-tab name="Challenges" :unlocked="false">
+      <igt-tab name="Spells" :selected="true">
+        <main-crystal :main-crystal-feature="game.features.mainCrystal">
+          <mana-bar :mana-resource-feature="game.features.mainCrystal"></mana-bar>
+          <knowledge-bar :knowledge-resource-feature="game.features.knowledgeResource"></knowledge-bar>
+        </main-crystal>
+        <mana-upgrades :main-crystal-feature="game.features.mainCrystal"></mana-upgrades>
+        <spell-button-list :spell-list-feature="game.features.allSpells" :walletFeature="game.features.wallet"></spell-button-list>
       </igt-tab>
 
       <igt-sidebar-category name="Other"></igt-sidebar-category>
@@ -49,6 +29,11 @@
 </template>
 
 <script>
+import MainCrystal from "@/components/features/mana-storage/main-crystal";
+import ManaUpgrades from "@/components/features/mana-storage/mana-upgrades";
+import ManaBar from "@/components/features/resource-storage/mana-bar"
+import KnowledgeBar from "@/components/features/resource-storage/knowledge-bar";
+import SpellButtonList from "@/components/features/spells/spell-button-list"
 import {App} from "@/App.ts"
 import IgtSidebar from "@/components/util/sidebar/igt-sidebar-layout";
 import IgtTab from "@/components/util/igt-tab";
@@ -57,19 +42,20 @@ import IgtDeveloperPanel from "@/components/developer-panel/igt-developer-panel"
 import IgtSidebarCategory from "@/components/util/sidebar/igt-sidebar-category";
 import IgtSidebarExternalLink from "@/components/util/sidebar/igt-sidebar-external-link";
 import IgtSettings from "@/components/features/settings/igt-settings";
-import IgtWallet from "@/components/features/wallet/igt-wallet";
 import IgtTabs from "@/components/util/igt-tabs";
-import crystalClick from "@/components/features/crystal-producer/crystal-click";
 
 export default {
   components: {
+    MainCrystal,
+    ManaUpgrades,
+    ManaBar,
+    KnowledgeBar,
+    SpellButtonList,
     IgtSidebar,
-    crystalClick,
     IgtSettings,
     IgtDeveloperPanel,
     IgtNotifications,
     IgtTab,
-    IgtWallet,
     IgtSidebarCategory
   },
   data() {
