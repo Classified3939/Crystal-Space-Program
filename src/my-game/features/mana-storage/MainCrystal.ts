@@ -1,30 +1,35 @@
-import {ContinuousUpgrade, Currency, IgtFeature, SaveData} from "incremental-game-template";
+import { Currency, IgtFeature, SaveData} from "incremental-game-template";
 import { CurrencyType } from "@/my-game/features/wallet/CurrencyType";
 import { CspAddWallet } from "@/components/mixins/CspAddWallet";
+import { AbstractResource } from "@/my-game/features/resources/AbstractResource";
+import { BlankResource } from "@/my-game/features/resources/BlankResource";
+import { MyFeatures } from "@/my-game/MyFeatures";
 
 export class MainCrystal extends CspAddWallet(IgtFeature){
 
-    realignUpgrade: ContinuousUpgrade;
     manaPerSecond: number;
     percentFull: number;
+    manaResource: AbstractResource
 
     constructor(){
         super('main-crystal')
         this.manaPerSecond = 10;
         this.percentFull = (this.manaPerSecond / 100) * 100;
-        this.realignUpgrade = new ContinuousUpgrade('realign','mana',"Realign Mana Flows",5,
-            level =>{
-                return level * 4;
-            },
-            level => {
-                return new Currency(20 * Math.pow(level + 1, 1.45), CurrencyType.mana);
-            }
-        )
+        this.manaResource = new BlankResource();
+
+    }
+
+    initialize(features: MyFeatures): void {
+        this.manaResource = features.manaResource;
+        this._wallet = features.wallet;
     }
 
     update(delta: number){
-        const manaToGain = this.manaPerSecond + this.realignUpgrade.getBonus();
-        const maximumMana = this.getMaxMana();
+        let manaToGain = this.manaPerSecond;
+        if (this.manaResource.getUpgrade("realignUpgrade")){
+            manaToGain += this.manaResource.getUpgrade("realignUpgrade")!.getBonus();
+        }
+        const maximumMana = this.manaResource.getMax();
         if (this.getAmount(CurrencyType.mana) >= maximumMana){
             this.percentFull = 100;
         }
@@ -39,14 +44,6 @@ export class MainCrystal extends CspAddWallet(IgtFeature){
             this._wallet.gainCurrency(currency);
             this.percentFull = (this.getAmount(CurrencyType.mana) / maximumMana) * 100;
         }
-    }
-
-    getCurrentMana(): number{
-        return this._wallet.getAmount(CurrencyType.mana);
-    }
-
-    getMaxMana(): number{
-        return this._wallet.getAmount(CurrencyType.maxMana);
     }
 
     load(data: SaveData): void {

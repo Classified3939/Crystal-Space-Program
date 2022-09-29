@@ -1,7 +1,7 @@
 <template>
-    <igt-feature :containerClass="'w-1/3 bg-gray-200 dark:bg-gray-700'">
-        <csp-progress-bar :percentage="mainCrystalFeature.percentFull">
-        </csp-progress-bar>
+    <igt-feature :containerClass="'w-1/4 bg-gray-200 dark:bg-gray-700'">
+        <mana-progress-bar :percentage="mainCrystalFeature.percentFull">
+        </mana-progress-bar>
         <resource-bars>
             <slot></slot>
         </resource-bars>
@@ -10,14 +10,14 @@
 
 <script>
 import IgtFeature from "@/components/util/igt-feature";
-import CspProgressBar from "@/components/util/csp-progress-bar";
+import ManaProgressBar from "@/components/features/mana-storage/mana-progress-bar";
 import IgtUpgrade from "@/components/tools/upgrades/igt-discrete-upgrade";
 import ResourceBars from "@/components/features/resource-storage/resource-bars"
 import {MainCrystal} from "@/my-game/features/mana-storage/MainCrystal";
 
 export default {
     name: "main-crystal",
-    components: {IgtFeature, CspProgressBar, ResourceBars},
+    components: {IgtFeature, ManaProgressBar, ResourceBars},
     props:{
         mainCrystalFeature: {
             type: MainCrystal,

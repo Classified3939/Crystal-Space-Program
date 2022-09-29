@@ -7,11 +7,15 @@
 
       <igt-tab name="Spells" :selected="true">
         <main-crystal :main-crystal-feature="game.features.mainCrystal">
-          <mana-bar :mana-resource-feature="game.features.mainCrystal"></mana-bar>
+          <mana-bar :mana-resource-feature="game.features.manaResource"></mana-bar>
           <knowledge-bar :knowledge-resource-feature="game.features.knowledgeResource"></knowledge-bar>
         </main-crystal>
-        <mana-upgrades :main-crystal-feature="game.features.mainCrystal"></mana-upgrades>
+        <mana-upgrades :mana-resource-feature="game.features.manaResource" :knowledge-resource-feature="game.features.knowledgeResource"></mana-upgrades>
         <spell-button-list :spell-list-feature="game.features.allSpells" :walletFeature="game.features.wallet"></spell-button-list>
+      </igt-tab>
+
+      <igt-tab name="Crystallizer">
+        <crystallizer-list :crystal-list-feature="game.features.allCrystals"></crystallizer-list>
       </igt-tab>
 
       <igt-sidebar-category name="Other"></igt-sidebar-category>
@@ -33,8 +37,9 @@ import MainCrystal from "@/components/features/mana-storage/main-crystal";
 import ManaUpgrades from "@/components/features/mana-storage/mana-upgrades";
 import ManaBar from "@/components/features/resource-storage/mana-bar"
 import KnowledgeBar from "@/components/features/resource-storage/knowledge-bar";
-import SpellButtonList from "@/components/features/spells/spell-button-list"
-import {App} from "@/App.ts"
+import SpellButtonList from "@/components/features/spells/spell-button-list";
+import CrystallizerList from "@/components/features/crystallizer/crystallizer-list";
+import {App} from "@/App.ts";
 import IgtSidebar from "@/components/util/sidebar/igt-sidebar-layout";
 import IgtTab from "@/components/util/igt-tab";
 import IgtNotifications from "@/components/util/igt-notifications";
@@ -51,6 +56,7 @@ export default {
     ManaBar,
     KnowledgeBar,
     SpellButtonList,
+    CrystallizerList,
     IgtSidebar,
     IgtSettings,
     IgtDeveloperPanel,

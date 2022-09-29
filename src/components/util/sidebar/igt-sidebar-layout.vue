@@ -58,10 +58,10 @@
         </header>
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto">
-          <div class="container mx-auto px-6 py-8">
+          <div class="container mx-auto px-6 py-8 h-full">
             <div
-                class="grid place-items-center text-gray-500 dark:text-gray-300 text-xl border-4 border-gray-300 shadow-md">
-              <div class="w-full">
+                class="grid place-items-center text-gray-500 dark:text-gray-300 text-xl h-full border-4 border-gray-300 shadow-md">
+              <div class="w-full h-full">
                 <slot></slot>
               </div>
             </div>

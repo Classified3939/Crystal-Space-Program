@@ -1,31 +1,16 @@
 import {SingleLevelUpgrade, Currency, IgtFeature, SaveData} from "incremental-game-template";
 import { CurrencyType } from "@/my-game/features/wallet/CurrencyType";
-import { CspAddWallet } from "@/components/mixins/CspAddWallet";
+import { AbstractResource } from "@/my-game/features/resources/AbstractResource";
 
-export class KnowledgeResource extends CspAddWallet(IgtFeature){
+export class KnowledgeResource extends AbstractResource{
 
     unlockCrystallizerUpgrade: SingleLevelUpgrade
 
 
     constructor(){
-        super("knowledge-resource");
+        super("knowledge-resource",CurrencyType.knowledge,CurrencyType.maxKnowledge);
         this.unlockCrystallizerUpgrade = new SingleLevelUpgrade('unlockCrystallizer', 'unlock', "Unlock Crystallizer", 
             new Currency(2,CurrencyType.knowledge), 0)
-    }
-
-    getCurrentKnowledge(): number{
-        return this._wallet.getAmount(CurrencyType.knowledge);
-    }
-    
-    getMaxKnowledge(): number{
-        return this._wallet.getAmount(CurrencyType.maxKnowledge);
-    }
-
-    load(data: SaveData): void {
-        // Empty
-    }
-        
-    save(): SaveData {
-        return {};
+        this.upgrades.push(this.unlockCrystallizerUpgrade);
     }
 }

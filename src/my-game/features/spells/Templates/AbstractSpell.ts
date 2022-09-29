@@ -26,12 +26,12 @@ export abstract class AbstractSpell implements Saveable{
     }
 
     cast(wallet: IgtWallet): boolean {
-        if (!this.canAfford(wallet)) {
+        if (!this.canAfford(wallet) || !this.result.canStart) {
             return false;
         }
 
         wallet.loseCurrency(this.getCost());
-        this.result.gainReward();
+        this.result.start();
         return true;
     }
 
@@ -58,4 +58,6 @@ export abstract class AbstractSpell implements Saveable{
             'level': this.level
         }
     }
+
+    abstract initialize(): void
 }

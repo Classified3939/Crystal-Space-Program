@@ -1,7 +1,11 @@
 export enum CurrencyType {
     mana = "Mana",
-    maxMana = "Maximum Mana",
+    maxMana = "Max Mana",
     knowledge = "Knowledge",
-    maxKnowledge = "Maximum Knowledge",
-    redCrystal = "Red Crystal"
+    maxKnowledge = "Max Knowledge",
+    infraCrystal = "Infrared Crystal",
+    maxInfra = "Max Infrared Crystal",
+    redCrystal = "Red Crystal",
+    maxRed = "Max Red Crystal",
+    blank = "<blank>",
 }

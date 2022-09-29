@@ -1,5 +1,5 @@
 <template>
-    <igt-feature :containerClass="'w-1/3 bg-gray-200 dark:bg-gray-700'">
+    <igt-feature :containerClass="'w-1/2 bg-gray-200 dark:bg-gray-700'">
         <h1 class="text-2xl ml-5">Available Spells</h1>
         <br>
         <div v-for="spell in spellListFeature.spellArray" :key="spell.id">

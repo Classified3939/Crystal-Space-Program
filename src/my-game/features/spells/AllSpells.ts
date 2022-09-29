@@ -1,4 +1,4 @@
-import { IgtFeature, SaveData } from "incremental-game-template";
+import { IgtFeature, IgtFeatures, SaveData } from "incremental-game-template";
 import { GainComprehensionSpell } from "@/my-game/features/spells/GainComprehensionSpell";
 import { SpellSaveData } from "@/my-game/features/spells/Templates/SpellSaveData";
 import { AbstractSpell } from "@/my-game/features/spells/Templates/AbstractSpell";
@@ -17,6 +17,12 @@ export class AllSpells extends IgtFeature{
         this.pushSpells();
     }
 
+    initialize(features: IgtFeatures): void {
+        this.spellArray.forEach(element => {
+            element.initialize();
+        });
+    }
+
     pushSpells(){
         this.spellArray.push(new GainComprehensionSpell());
     }
@@ -29,6 +35,14 @@ export class AllSpells extends IgtFeature{
         return dataArray;
     }
 
+    update(delta: number): void {
+        this.spellArray.forEach(element => {
+            if (element.result.isCooldown){
+                element.result.tick(delta);
+            }
+        });
+    }
+
     load(dataArray: Array<SpellSaveData>){
         for (let i = 0; i < this.spellArray.length; i++){
             if (!dataArray[i] == null){
@@ -36,5 +50,4 @@ export class AllSpells extends IgtFeature{
             }
         }
     }
-    
 }

@@ -1,33 +1,40 @@
 import { SpellAction } from "@/my-game/features/actions/SpellAction";
-import { CurrencyType } from "@/my-game/features/wallet/CurrencyType";
 import { Currency } from "incremental-game-template";
 import {App} from "@/App"
+import { AbstractResource } from "@/my-game/features/resources/AbstractResource";
 
 export class GainResourceAction extends SpellAction{
-    rewardType: CurrencyType;
+    resource: AbstractResource;
     rewardAmount: number;
     multFunc: (level: number) => number;
-    maxResource: number;
     
-    constructor(goal: number, rewardType: CurrencyType, rewardAmount: number, spellLevel: number, maxResource: number, multFunc: (level: number) => number){
+    constructor(goal: number, resource: AbstractResource, rewardAmount: number, spellLevel: number, multFunc: (level: number) => number){
         super(0,goal, spellLevel, "");
-        this.rewardType = rewardType;
+        this.resource = resource;
         this.rewardAmount = rewardAmount;
         this.multFunc = multFunc;
-        this.maxResource = maxResource;
-        this.description = "Gain " + this.getReward().toFixed(2) + " " + this.rewardType;
+        this.description = "Gain " + this.getReward().toFixed(2) + " " + this.resource.resourceType;
+    }
+
+    canStart(): boolean{
+        return this.resource.getCurrent() < this.resource.getMax();
+    }
+
+    setResource(newResource: AbstractResource){
+        this.resource = newResource;
     }
 
     gainReward(){
         let toGain = this.rewardAmount * this.multFunc(this.spellLevel);
-        const owned = App.game.features.wallet.getAmount(this.rewardType);
+        const owned = this.resource.getCurrent();
+        const maxResource = this.resource.getMax();
 
-        if (owned >= this.maxResource){return}
-
-        if (owned + toGain >= this.maxResource){
-            toGain = this.maxResource - owned;
+        if (owned + toGain >= maxResource){
+            toGain = maxResource - owned;
+            if (toGain < 0.01) {return;}
         }
-        App.game.features.wallet.gainCurrency(new Currency(toGain, this.rewardType));
+
+        App.game.features.wallet.gainCurrency(new Currency(toGain, this.resource.resourceType));
     }
 
     getReward(){

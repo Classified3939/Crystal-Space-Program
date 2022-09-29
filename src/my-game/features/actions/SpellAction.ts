@@ -1,34 +1,29 @@
 export abstract class SpellAction{
     progress: number;
     goal: number;
-    isStarted: boolean;
+    isCooldown: boolean;
     spellLevel: number;
     description: string;
-    canStart: boolean;
 
     protected constructor(progress: number, goal: number, spellLevel: number, description: string){
         this.progress = progress;
         this.goal = goal;
-        this.isStarted = false;
+        this.isCooldown = false;
         this.spellLevel = spellLevel;
         this.description = description;
-        this.canStart = true;
     }   
 
     public start() {
-        if (this.isStarted || !this.canStart) {
+        if (this.isCooldown || !this.canStart()) {
             console.warn("Cannot cast spell");
             return;
         }
-        this.isStarted = true;
+        this.gainReward();
+        this.isCooldown = true;
         this.progress = 0;
     }
 
     public tick(delta: number){
-        if (!this.isStarted){
-            this.start();
-            return;
-        }
         this.progress = Math.min(this.goal, this.progress + delta);
 
         if (this.isCompleted()){
@@ -40,14 +35,13 @@ export abstract class SpellAction{
         return this.progress >= this.goal
     }
 
-    get timeLeft(){
-        return (this.goal - this.progress).toFixed(0);
+    public getTimeLeft(){
+        return (this.goal - this.progress).toFixed(2);
     }
 
     public complete() {
-        this.gainReward();
         this.progress = 0;
-        this.isStarted = false;
+        this.isCooldown = false;
     }
 
     public setSpellLevel(newLevel: number){
@@ -55,4 +49,6 @@ export abstract class SpellAction{
     }
 
     abstract gainReward(): void;
+
+    abstract canStart(): boolean;
 }

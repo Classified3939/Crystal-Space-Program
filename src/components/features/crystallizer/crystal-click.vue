@@ -20,10 +20,6 @@ export default{
       required: true,
     },
   },
-  computed:{
-      console: () => console,
-      window: () => window,
-    },
 };
 
 </script>

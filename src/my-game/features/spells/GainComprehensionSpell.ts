@@ -9,9 +9,12 @@ export class GainComprehensionSpell extends AbstractSpell{
 
     constructor(){
         super("gainCompSpell","Gain Comprehension",new BlankSpellAction);
+    }
+
+    initialize(){
         const knowledgeGain = new 
-            GainResourceAction(5,CurrencyType.knowledge,1,this.level, 10,
-            level => {
+            GainResourceAction(5,App.game.features.knowledgeResource,1,this.level,
+(            level: number) => {
                 return 1 + (level - 1) * 1.1;
             })
         this.setResult(knowledgeGain);

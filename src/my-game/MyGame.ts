@@ -18,5 +18,8 @@ export class MyGame extends IgtGame {
         this.features = features;
         this.features.wallet.gainCurrency(new Currency(100, CurrencyType.maxMana));
         this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxKnowledge));
+        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxInfra));
+        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxRed));
+        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.redCrystal));
     }
 }

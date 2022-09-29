@@ -3,7 +3,7 @@
     <span class="flex flex-col">
       <span>{{ upgrade.displayName }}</span>
       <span>Lvl. {{ upgrade.level }} / {{ upgrade.maxLevel }}</span>
-      <igt-currency v-if="!upgrade.isMaxLevel()" :show-image="true" :currency="upgrade.getCost()"></igt-currency>
+      <igt-currency v-if="!upgrade.isMaxLevel()" :textFirst="true" :show-image="false" :currency="upgrade.getCost()"></igt-currency>
       <span v-else>Max</span>
     </span>
   </button>

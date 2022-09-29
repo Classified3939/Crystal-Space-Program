@@ -8,4 +8,8 @@ export class BlankSpellAction extends SpellAction{
     gainReward(): void {
         //Empty
     }
+
+    canStart(){
+        return true;
+    }
 }

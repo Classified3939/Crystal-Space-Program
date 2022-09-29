@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full" v-show="isActive">
+  <div class="flex w-full h-full" v-show="isActive">
     <slot></slot>
   </div>
 </template>
