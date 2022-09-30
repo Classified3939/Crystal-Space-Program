@@ -1,8 +1,9 @@
 <template>
-    <div style="position:relative; display:grid; grid-template-colums:1fr; grid-template-rows:1fr; margin: 0 auto; width: auto">
-        <img width="256" height="256" style="position:relative; grid-row: 1; grid-column: 1; z-index:0;" :src="require(`@/assets/crystallizer/0.png`)" alt="crystal">
+    <div style="position:relative; display:grid; grid-template-colums:1fr; grid-template-rows:1fr;">
+        <img width="256" height="256" style="position:relative; grid-row: 1; grid-column: 1; z-index:0;" :src="require(`@/assets/crystallizer/empty.png`)" alt="crystal">
         <img v-if="percentage < 100" width="256" height="256" v-bind:style="styleObject" :src="require('@/assets/crystallizer/' + progressPath + '.png')" alt="crystal-progress">
-        <img v-else width="256" height="256" v-bind:style="styleObject" :src="require('@/assets/crystallizer/' + filledPath + '.png')" alt="crystal-full">
+        <img class="" v-else width="256" height="256" v-bind:style="styleObject" :src="require('@/assets/crystallizer/' + filledPath + '.png')" alt="crystal-full">
+        <br>
     </div>
   </template>
   
@@ -23,6 +24,10 @@
         type: String,
         required: true,
       },
+      crystalName:{
+        type: String,
+        required: true
+      }
     },
     computed: {
         styleObject: function(){
@@ -31,11 +36,17 @@
                 zIndex: "2",
                 gridRow: "1",
                 gridColumn: "1",
-                left: "0px",
-                clipPath: "inset("+(54.2-((this.percentage)*0.542)+8.73)+"% 0% 0%)",
-                marginRight: "auto"
+                clipPath: "inset("+this.getClipPath(this.percentage)+"% 0% 0%)",
             };            
         }
+    },
+    methods:{
+      getClipPath: function(percent){
+        if (percent == 100){return 0;}
+        else{
+          return 55.75-((this.percentage)*0.5575)+8.7 ;
+        }
+      }
     }
   }
   </script>

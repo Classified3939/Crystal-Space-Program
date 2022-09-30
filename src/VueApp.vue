@@ -15,7 +15,7 @@
       </igt-tab>
 
       <igt-tab name="Crystallizer">
-        <crystallizer-list :crystal-list-feature="game.features.allCrystals"></crystallizer-list>
+        <crystallizer-list :wallet-feature="game.features.wallet" :crystal-list-feature="game.features.allCrystals" :spell-list-feature="game.features.allSpells"></crystallizer-list>
       </igt-tab>
 
       <igt-sidebar-category name="Other"></igt-sidebar-category>

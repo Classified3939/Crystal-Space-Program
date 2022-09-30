@@ -1,11 +1,14 @@
-import { IgtFeature, IgtFeatures, SaveData } from "incremental-game-template";
+import { IgtFeature } from "incremental-game-template";
 import { GainComprehensionSpell } from "@/my-game/features/spells/GainComprehensionSpell";
 import { SpellSaveData } from "@/my-game/features/spells/Templates/SpellSaveData";
 import { AbstractSpell } from "@/my-game/features/spells/Templates/AbstractSpell";
+import { GainCrystalSpell } from "./GainCrystalSpell";
+import { MyFeatures } from "@/my-game/MyFeatures";
 
 export class AllSpells extends IgtFeature{
 
     spellArray: Array<AbstractSpell>;
+    crystalSpellArray: Array<AbstractSpell>;
     saveKey: string;
     id: string;
 
@@ -14,11 +17,18 @@ export class AllSpells extends IgtFeature{
         this.id = id;
         this.saveKey = id;
         this.spellArray = new Array<AbstractSpell>();
+        this.crystalSpellArray = new Array<AbstractSpell>();
         this.pushSpells();
     }
 
-    initialize(features: IgtFeatures): void {
+    initialize(features: MyFeatures): void {
+        features.allCrystals.crystalArray.forEach(element => {
+            this.crystalSpellArray.push(new GainCrystalSpell(element))
+        });
         this.spellArray.forEach(element => {
+            element.initialize();
+        });
+        this.crystalSpellArray.forEach(element => {
             element.initialize();
         });
     }
@@ -37,6 +47,11 @@ export class AllSpells extends IgtFeature{
 
     update(delta: number): void {
         this.spellArray.forEach(element => {
+            if (element.result.isCooldown){
+                element.result.tick(delta);
+            }
+        });
+        this.crystalSpellArray.forEach(element => {
             if (element.result.isCooldown){
                 element.result.tick(delta);
             }

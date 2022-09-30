@@ -7,5 +7,11 @@ export enum CurrencyType {
     maxInfra = "Max Infrared Crystal",
     redCrystal = "Red Crystal",
     maxRed = "Max Red Crystal",
+    orangeCrystal = "Orange Crystal",
+    maxOrange = "Max Orange Crystal",
+    yellowCrystal = "Yellow Crystal",
+    maxYellow = "Max Yellow Crystal",
+    greenCrystal = "Green Crystal",
+    maxGreen = "Max Green Crystal",
     blank = "<blank>",
 }

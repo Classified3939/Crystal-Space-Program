@@ -24,8 +24,11 @@ export class App {
             {
                 settings: new IgtSettings(),
                 // Add features here.
-                wallet : new IgtWallet([CurrencyType.mana, CurrencyType.maxMana, CurrencyType.knowledge, CurrencyType.maxKnowledge, 
-                    CurrencyType.infraCrystal,CurrencyType.maxInfra, CurrencyType.redCrystal, CurrencyType.maxRed]),
+                wallet : new IgtWallet([
+                    CurrencyType.mana, CurrencyType.maxMana, CurrencyType.knowledge, CurrencyType.maxKnowledge, 
+                    CurrencyType.infraCrystal, CurrencyType.maxInfra, CurrencyType.redCrystal, CurrencyType.maxRed, CurrencyType.orangeCrystal,
+                    CurrencyType.maxOrange, CurrencyType.yellowCrystal, CurrencyType.maxYellow, CurrencyType.greenCrystal, CurrencyType.maxGreen,
+                    ]),
                 mainCrystal : new MainCrystal(),
                 manaResource: new ManaResource(),
                 knowledgeResource : new KnowledgeResource(),

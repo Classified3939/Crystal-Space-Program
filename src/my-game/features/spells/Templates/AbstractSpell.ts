@@ -1,5 +1,5 @@
 import { SpellId } from "@/my-game/features/spells/Templates/SpellId";
-import { Currency, IgtAction, IgtWallet, Saveable } from "incremental-game-template";
+import { Currency, IgtWallet, Saveable } from "incremental-game-template";
 import { SpellSaveData } from "@/my-game/features/spells/Templates/SpellSaveData";
 import { SpellAction } from "@/my-game/features/actions/SpellAction";
 
