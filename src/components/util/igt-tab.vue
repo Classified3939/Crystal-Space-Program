@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isActive">
+  <div class="flex w-full h-full" v-show="isActive">
     <slot></slot>
   </div>
 </template>
@@ -10,13 +10,15 @@ export default {
   name: "igt-tab",
   props: {
     name: {required: true},
-    selected: {default: false}
+    selected: {default: false},
+    hasAlert: {default: false},
+    canSelect: {default: true},
   },
 
   data() {
     return {
-      canSelect: true,
-      isActive: false
+      isActive: false,
+      isAlert: false,
     };
   },
 
@@ -28,7 +30,14 @@ export default {
 
   mounted() {
     this.isActive = this.selected;
-  }
+    this.isAlert = this.hasAlert;
+  },
+
+  methods: {
+    setAlert(status) {
+      this.isAlert = status;
+    },
+  },
 }
 </script>
 

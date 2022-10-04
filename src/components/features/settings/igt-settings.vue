@@ -1,6 +1,8 @@
 <template>
-  <igt-feature>
+  <igt-feature :containerClass="'bg-gray-200 dark:bg-gray-700 w-full'">
+    <br>
     <button class="btn btn-red" @click="resetSave">Reset Save</button>
+    <button class="btn btn-green" @click="manualSave">Manual Save</button>
   </igt-feature>
 </template>
 
@@ -26,6 +28,9 @@ export default {
       }
       App.game.deleteSave();
       location.reload();
+    },
+    manualSave(){
+      App.game.save();
     }
   },
 }

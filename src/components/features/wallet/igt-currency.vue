@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row justify-center">
-    <span v-if="textFirst" class="mr-1"><span v-if="negative">-</span>{{ currency.amount }}</span>
+    <span v-if="textFirst" class="mr-1"><span v-if="negative">-</span>{{ currency.amount | numberFormat}}</span>
     <div v-if="showImage" class="w-8 h-8">
       <!-- Add images here if you have them -->
 <!--      <img v-if="currency.type === CurrencyType.YourCurrency" :src="require('@/assets/images/currencies/money.svg')"-->
@@ -8,7 +8,7 @@
     </div>
     <span v-else>{{ currency.type }}</span>
 
-    <span v-if="!textFirst" class="ml-1"><span v-if="negative">-</span>{{ currency.amount }}</span>
+    <span v-if="!textFirst" class="ml-1"><span v-if="negative">-</span>{{ currency.amount | numberFormat }}</span>
 
   </div>
 </template>

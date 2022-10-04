@@ -1,5 +1,11 @@
 import {MyGame} from "./my-game/MyGame";
-import {IgtSettings} from "incremental-game-template";
+import {Currency, IgtSettings, IgtWallet} from "incremental-game-template";
+import {CurrencyType} from "@/my-game/features/wallet/CurrencyType"
+import { MainCrystal } from "./my-game/features/mana-storage/MainCrystal";
+import { KnowledgeResource } from "./my-game/features/resources/KnowledgeResource";
+import { AllSpells } from "./my-game/features/spells/AllSpells";
+import { ManaResource } from "./my-game/features/resources/ManaResource";
+import { AllCrystals } from "./my-game/features/resources/crystal-resources/AllCrystals";
 
 export class App {
     static inProduction: boolean = (process.env.NODE_ENV === "production");
@@ -17,7 +23,17 @@ export class App {
         return new MyGame(
             {
                 settings: new IgtSettings(),
-                // Add your own features here.
+                // Add features here.
+                wallet : new IgtWallet([
+                    CurrencyType.mana, CurrencyType.maxMana, CurrencyType.knowledge, CurrencyType.maxKnowledge, 
+                    CurrencyType.infraCrystal, CurrencyType.maxInfra, CurrencyType.redCrystal, CurrencyType.maxRed, CurrencyType.orangeCrystal,
+                    CurrencyType.maxOrange, CurrencyType.yellowCrystal, CurrencyType.maxYellow, CurrencyType.greenCrystal, CurrencyType.maxGreen,
+                    ]),
+                mainCrystal : new MainCrystal(),
+                manaResource: new ManaResource(),
+                knowledgeResource : new KnowledgeResource(),
+                allSpells: new AllSpells("spell-list"),
+                allCrystals: new AllCrystals("all-crystals"),
             }
         );
     }

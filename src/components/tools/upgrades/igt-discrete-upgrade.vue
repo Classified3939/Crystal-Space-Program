@@ -1,10 +1,9 @@
 <template>
-  <button class="btn btn-blue" :disabled="!canBuy">
+  <button v-if="!upgrade.isMaxLevel()" class="btn btn-blue " :disabled="!canBuy">
     <span class="flex flex-col">
-      <span>{{ upgrade.displayName }}</span>
+      <span style='white-space: pre-line'>{{ upgrade.displayName }}</span>
       <span>Lvl. {{ upgrade.level }} / {{ upgrade.maxLevel }}</span>
-      <igt-currency v-if="!upgrade.isMaxLevel()" :show-image="true" :currency="upgrade.getCost()"></igt-currency>
-      <span v-else>Max</span>
+      <igt-currency :textFirst="true" :show-image="false" :currency="upgrade.getCost()"></igt-currency>
     </span>
   </button>
 </template>
