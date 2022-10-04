@@ -6,6 +6,8 @@ export class BlankCrystalResource extends AbstractResource implements CrystalRes
 
     progressImageString = "empty";
     fullImageString = "empty";
+    gainCooldown = 0;
+    gainCost = 0;
 
     constructor(){
         super("blank-crystal-resource",CurrencyType.blank,CurrencyType.blank);
