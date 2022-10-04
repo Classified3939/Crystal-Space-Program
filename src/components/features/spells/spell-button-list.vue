@@ -3,7 +3,7 @@
         <h1 class="text-2xl ml-5">Available Spells</h1>
         <br>
         <div v-for="spell in spellListFeature.spellArray" :key="spell.id">
-            <spell-button :spellFeature="spell" :walletFeature="walletFeature"></spell-button>
+            <spell-button :unlocked="spell.unlocked" :spellFeature="spell" :walletFeature="walletFeature"></spell-button>
         </div>
     </igt-feature>
 </template>

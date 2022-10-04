@@ -29,7 +29,7 @@ export class GainCrystalSpell extends AbstractSpell{
     }
 
     cast(wallet: IgtWallet): boolean {
-        if (!this.canAfford(wallet) || !this.result.canStart || !(this.result instanceof DelayedGainAction)) {
+        if (!(this.result instanceof DelayedGainAction)) {
             return false;
         }
 
@@ -37,10 +37,17 @@ export class GainCrystalSpell extends AbstractSpell{
             this.result.gainReward();
             return true;
         }
+        else if (!this.canAfford(wallet) || !this.result.canStart){
+            return false;
+        }
         else{
             wallet.loseCurrency(this.getCost());
             this.result.start();
             return true;
         }
+    }
+
+    unlock(){
+        return true;
     }
 }

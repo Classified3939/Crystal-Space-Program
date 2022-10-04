@@ -12,11 +12,11 @@ export default {
     name: {required: true},
     selected: {default: false},
     hasAlert: {default: false},
+    canSelect: {default: true},
   },
 
   data() {
     return {
-      canSelect: true,
       isActive: false,
       isAlert: false,
     };

@@ -14,7 +14,7 @@
         <spell-button-list :spell-list-feature="game.features.allSpells" :walletFeature="game.features.wallet"></spell-button-list>
       </igt-tab>
 
-      <igt-tab name="Crystallizer">
+      <igt-tab name="Crystallizer" :canSelect="game.features.knowledgeResource.unlockCrystallizerUpgrade.isBought()">
         <crystallizer-list :wallet-feature="game.features.wallet" :crystal-list-feature="game.features.allCrystals" :spell-list-feature="game.features.allSpells"></crystallizer-list>
       </igt-tab>
 

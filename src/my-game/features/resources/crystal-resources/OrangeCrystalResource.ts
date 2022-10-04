@@ -6,8 +6,8 @@ export class OrangeCrystalResource extends AbstractResource implements CrystalRe
 
     progressImageString = "orange";
     fullImageString = "orange-filled";
-    gainCooldown = 3;
-    gainCost = 20;
+    gainCooldown = 20;
+    gainCost = 200;
 
     constructor(){
         super("orange-crystal-resource",CurrencyType.orangeCrystal,CurrencyType.maxOrange);

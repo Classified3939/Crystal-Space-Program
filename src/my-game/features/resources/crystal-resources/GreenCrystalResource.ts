@@ -7,8 +7,8 @@ export class GreenCrystalResource extends AbstractResource implements CrystalRes
 
     progressImageString = "green";
     fullImageString = "green-filled";
-    gainCooldown = 5;
-    gainCost = 20;
+    gainCooldown = 60;
+    gainCost = 1000;
 
     constructor(){
         super("green-crystal-resource",CurrencyType.greenCrystal,CurrencyType.maxGreen);

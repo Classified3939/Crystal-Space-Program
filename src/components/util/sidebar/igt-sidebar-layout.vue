@@ -18,9 +18,10 @@
 
           <a class="flex flex-row w-full justify-between items-center tab-entry dark:text-white" :key="'tab-'+index"
              v-for="(tab, index) in tabs"
-             :class="{ 'bg-csp-grass dark:text-white': tab.isActive,
-             'bg-csp-orange dark:text-black': !tab.isCategory && !tab.isActive && tab.isAlert,
-             'hover:text-gray-700 hover:bg-gray-200 cursor-pointer dark:hover:text-gray-700': !tab.isCategory && !tab.isActive
+             :class="{ 
+                'bg-csp-grass text-white': tab.isActive,
+                'bg-csp-orange text-black': !tab.isCategory && !tab.isActive && tab.isAlert,
+                'hover:text-gray-700 hover:bg-gray-200 cursor-pointer dark:hover:text-gray-700': !tab.isCategory && !tab.isActive,
               }"
              :href="tab.link" target="_blank"
              @click="tab.canSelect ? selectTab(tab) : ''"
@@ -30,6 +31,7 @@
               {{ tab.name }}
               <hr/>
             </div>
+            <span v-else-if="!tab.canSelect">???</span>
             <span v-else>{{ tab.name }}</span>
             <img v-if="tab.image" class="w-8 h-8" :src="require('@/assets/' +tab.image)" :alt="tab.image"/>
 

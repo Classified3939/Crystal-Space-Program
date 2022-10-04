@@ -6,8 +6,8 @@ export class YellowCrystalResource extends AbstractResource implements CrystalRe
 
     progressImageString = "yellow";
     fullImageString = "yellow-filled";
-    gainCooldown = 4;
-    gainCost = 20;
+    gainCooldown = 45;
+    gainCost = 500;
 
     constructor(){
         super("yellow-crystal-resource",CurrencyType.yellowCrystal,CurrencyType.maxYellow);

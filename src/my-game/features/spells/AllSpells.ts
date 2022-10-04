@@ -4,6 +4,8 @@ import { SpellSaveData } from "@/my-game/features/spells/Templates/SpellSaveData
 import { AbstractSpell } from "@/my-game/features/spells/Templates/AbstractSpell";
 import { GainCrystalSpell } from "./GainCrystalSpell";
 import { MyFeatures } from "@/my-game/MyFeatures";
+import { AbsorbInfraredSpell } from "./AbsorbInfraredSpell";
+import { AbsorbRedSpell } from "./AbsorbRedSpell";
 
 export class AllSpells extends IgtFeature{
 
@@ -35,6 +37,8 @@ export class AllSpells extends IgtFeature{
 
     pushSpells(){
         this.spellArray.push(new GainComprehensionSpell());
+        this.spellArray.push(new AbsorbInfraredSpell());
+        this.spellArray.push(new AbsorbRedSpell());
     }
 
     save(): Array<SpellSaveData> {
@@ -46,14 +50,17 @@ export class AllSpells extends IgtFeature{
     }
 
     update(delta: number): void {
-        this.spellArray.forEach(element => {
+        this.updateSpellArray(delta, this.spellArray);
+        this.updateSpellArray(delta, this.crystalSpellArray);
+    }
+
+    updateSpellArray(delta: number, array: Array<AbstractSpell>): void{
+        array.forEach(element => {
             if (element.result.isCooldown){
                 element.result.tick(delta);
             }
-        });
-        this.crystalSpellArray.forEach(element => {
-            if (element.result.isCooldown){
-                element.result.tick(delta);
+            if (!element.unlocked){
+                element.unlock();
             }
         });
     }

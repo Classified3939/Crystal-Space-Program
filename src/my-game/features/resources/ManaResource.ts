@@ -8,7 +8,7 @@ export class ManaResource extends AbstractResource{
 
     constructor(){
         super("mana-resource",CurrencyType.mana,CurrencyType.maxMana);
-        this.realignUpgrade = new ContinuousUpgrade('realignUpgrade','mana',"Realign Mana Flows",5,
+        this.realignUpgrade = new ContinuousUpgrade('realignUpgrade','mana',"Realign Mana Flows \n Plus 4 mana/sec",5,
             level =>{
                 return level * 4;
             },

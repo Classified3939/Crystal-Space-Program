@@ -6,8 +6,8 @@ export class RedCrystalResource extends AbstractResource implements CrystalResou
 
     progressImageString = "red";
     fullImageString = "red-filled";
-    gainCooldown = 2;
-    gainCost = 20;
+    gainCooldown = 10;
+    gainCost = 150;
 
     constructor(){
         super("red-crystal-resource",CurrencyType.redCrystal,CurrencyType.maxRed);

@@ -12,13 +12,20 @@ module.exports = {
         'csp-white': "#EEEEEE",
         'csp-grass': "#009432",
         'csp-blue': "#00487C",
-        'csp-orange': "#F3722C"
-      }
+        'csp-orange': "#F3722C",
+        'csp-red': "#D63031",
+        'test-gray': colors.coolGray
+      },
+      backgroundOpacity:{
+        '50': '0.5'
+      },
     },
   },
   variants: {
     extend: {
       'opacity': 'disabled',
+      'backgroundOpacity': 'disabled',
+      'backgroundColor': 'disabled',
     },
   },
   plugins: [],

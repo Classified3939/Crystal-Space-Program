@@ -18,9 +18,16 @@ export class GainComprehensionSpell extends AbstractSpell{
                 return 1 + (level - 1) * 1.1;
             })
         this.setResult(knowledgeGain);
+        this.unlocked = false;
     }
 
     getCost(): Currency {
         return new Currency(80,CurrencyType.mana);
+    }
+
+    unlock(){
+        if (App.game.features.manaResource.realignUpgrade.level >= 2){
+            this.unlocked = true;
+        }
     }
 }

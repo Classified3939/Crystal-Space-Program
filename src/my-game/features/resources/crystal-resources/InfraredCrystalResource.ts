@@ -6,8 +6,8 @@ export class InfraredCrystalResource extends AbstractResource implements Crystal
 
     progressImageString = "infra";
     fullImageString = "infra-filled";
-    gainCooldown = 1;
-    gainCost = 20;
+    gainCooldown = 4;
+    gainCost = 50;
 
     constructor(){
         super("infrared-crystal-resource",CurrencyType.infraCrystal,CurrencyType.maxInfra);

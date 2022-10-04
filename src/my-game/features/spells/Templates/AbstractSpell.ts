@@ -9,12 +9,14 @@ export abstract class AbstractSpell implements Saveable{
     displayName: string
     level: number
     result: SpellAction
+    unlocked: boolean;
     
     protected constructor(id: SpellId, displayName: string, result: SpellAction){
         this.id = id;
         this.displayName = displayName;
         this.level = 1;
         this.result = result;
+        this.unlocked = true;
 
         this.saveKey = this.id;
     }
@@ -60,4 +62,6 @@ export abstract class AbstractSpell implements Saveable{
     }
 
     abstract initialize(): void
+
+    abstract unlock(): void
 }

@@ -6,7 +6,7 @@
             :progressPath="crystal.progressImageString" :crystalName="crystal.resourceType">
             </crystal-progress>
             <gain-crystal-button :spellFeature="spellListFeature.crystalSpellArray[index]" :walletFeature="walletFeature"></gain-crystal-button>
-            <div class="w-full text-center">{{crystal.getCurrent() | numberFormat}}/{{crystal.getMax() | numberFormat}}</div>
+            <div class="w-full text-center">Amount: {{crystal.getCurrent() | numberFormat}}/{{crystal.getMax() | numberFormat}}</div>
         </div>
     </igt-feature>
 </template>

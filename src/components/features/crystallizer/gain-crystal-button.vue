@@ -10,7 +10,7 @@
             <br>
             <span>{{"Costs " + spellFeature.getCost().amount + " " + spellFeature.getCost().type}}</span>
             <br>
-            <span v-if="!spellFeature.result.isCooldown">{{"Cooldown "+spellFeature.result.goal + " seconds"}}</span>
+            <span v-if="!spellFeature.result.isCooldown">{{"Requires "+spellFeature.result.goal + " seconds"}}</span>
             <span v-else>{{spellFeature.result.getTimeLeft()+" seconds"}}</span>
         </div>
     </button>

@@ -1,9 +1,9 @@
 <template>
-    <button class="btn btn-purple has-tooltip" :disabled="!spellFeature.canAfford(walletFeature) || spellFeature.result.isCooldown || !spellFeature.result.canStart()"
+    <button v-if="unlocked" class="btn btn-purple has-tooltip w-5/12" :disabled="!spellFeature.canAfford(walletFeature) || spellFeature.result.isCooldown || !spellFeature.result.canStart()"
         v-on:click="spellFeature.cast(walletFeature)">
         <span class="flex flex-col">
             <span>{{spellFeature.displayName}}</span>
-            <span>{{spellFeature.result.description}}</span>
+            <span style="white-space: pre-line">{{spellFeature.result.description}}</span>
         </span>
         <div class="tooltip flex flex-col">
             <span>{{"Level " + spellFeature.level}}</span>
@@ -32,6 +32,7 @@
                 type: IgtWallet,
                 required: true,
             },
+            unlocked: {default: true},
         }
     }
 </script>
