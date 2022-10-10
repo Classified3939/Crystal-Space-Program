@@ -23,7 +23,8 @@ export class App {
                 // Add features here.
                 wallet: new IgtWallet([CurrencyType.empty]),
                 itemList: new ItemList(),
-                mainInventory: new Inventory(27),
+                mainInventory: new Inventory(27, "mainInventory"),
+                heldItem: new Inventory(1, "heldItem"),
             }
         );
     }

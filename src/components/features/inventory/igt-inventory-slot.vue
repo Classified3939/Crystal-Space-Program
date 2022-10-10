@@ -1,10 +1,7 @@
 <template>
   <div class="w-16 h-16 lg:w-20 lg:h-20 b-2 bg-gray-500 m-2 p-2 border-gray-300 border-4 text-white text-sm lg:text-md"
-       draggable="true"
-       @dragstart="startDrag($event,index)"
-       @drop="onDrop($event, index)"
-       @dragover.prevent
-       @dragenter.prevent>
+    @click="onClick(index)"
+  >
     <div v-if="!inventorySlot.isEmpty()">
       <div class="flex flex-col">
         <div v-if="!this.hasIcon">{{ inventorySlot.item.name }}</div>
@@ -27,10 +24,6 @@ export default {
       type: InventorySlot,
       required: true,
     },
-    isSelected: {
-      type: Boolean,
-      required: true,
-    },
     index: {
       type: Number,
       required: true,
@@ -45,7 +38,13 @@ export default {
     }
   },
   methods: {
-    startDrag(evt, index) {
+    warn(message){
+      console.warn(message);
+    },
+    onClick(indexFrom){
+      this.$emit('itemClick',{'from': indexFrom,})
+    },
+    /*startDrag(evt, index) {
       if (!this.canDrag) {
         evt.preventDefault();
         return;
@@ -57,12 +56,20 @@ export default {
     onDrop(evt, indexTo) {
       const indexFrom = parseInt(evt.dataTransfer.getData('index'));
       this.$emit('interact', {'from': indexFrom, 'to': indexTo})
-    }
+    }*/
+
   },
 
+  
+/*draggable="true"
+@dragstart="startDrag($event,index)"
+@drop="onDrop($event, index)"
+@dragover.prevent
+@dragenter.prevent*/
 }
 </script>
 
 <style scoped>
 
 </style>
+

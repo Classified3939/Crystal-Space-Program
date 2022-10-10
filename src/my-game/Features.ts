@@ -8,4 +8,5 @@ export interface Features extends IgtFeatures{
     wallet: IgtWallet;
     itemList: ItemList;
     mainInventory: Inventory;
+    heldItem: Inventory;
 }

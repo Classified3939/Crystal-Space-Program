@@ -3,7 +3,10 @@
     <igt-notifications></igt-notifications>
     <igt-sidebar title="Crystal Space Program">
       <igt-tab name="Main" selected="true">
-        <igt-inventory :inventoryFeature="game.features.mainInventory"></igt-inventory>
+        <igt-inventory :inventoryFeature="game.features.mainInventory"
+                        :heldItemFeature="game.features.heldItem"></igt-inventory>
+        <held-stack :mainInventoryFeature="game.features.mainInventory"
+                    :singleSlotInventory="game.features.heldItem"></held-stack>
       </igt-tab>
       <igt-sidebar-category name="Other"></igt-sidebar-category>
       <igt-tab name="Settings">
@@ -27,6 +30,7 @@ import KnowledgeBar from "@/components/features/resource-storage/knowledge-bar";
 import SpellButtonList from "@/components/features/spells/spell-button-list";
 import CrystallizerList from "@/components/features/crystallizer/crystallizer-list";*/
 import IgtInventory from "@/components/features/inventory/igt-inventory";
+import HeldStack from "@/my-game/components/held-stack";
 import {App} from "@/App.ts";
 import IgtSidebar from "@/components/util/sidebar/igt-sidebar-layout";
 import IgtTab from "@/components/util/igt-tab";
@@ -39,6 +43,7 @@ import IgtTabs from "@/components/util/igt-tabs";
 
 export default {
   components: {
+    HeldStack,
     IgtInventory,
     IgtSidebar,
     IgtSettings,

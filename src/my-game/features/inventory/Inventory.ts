@@ -16,8 +16,8 @@ export class Inventory extends IgtFeature {
     private _onItemGain = new EventDispatcher<AbstractItem, number>();
 
 
-    constructor(slots: number = 10) {
-        super('inventory');
+    constructor(slots: number = 10, saveKey: string) {
+        super(saveKey);
         this.slotCount = slots;
         this.slots = new Array(this.slotCount).fill(new InventorySlot(new EmptyItem(), 0));
     }
@@ -65,7 +65,29 @@ export class Inventory extends IgtFeature {
         const temp = this.slots[indexFrom];
         this.slots.splice(indexFrom, 1, this.slots[indexTo]);
         this.slots.splice(indexTo, 1, temp);
+    }
+    
+    swapBetweenInventories(indexFrom: number, indexTo: number, otherInventory: Inventory){
+        const temp = otherInventory.slots[indexFrom];
+        otherInventory.slots.splice(indexFrom, 1, this.slots[indexTo]);
+        this.slots.splice(indexTo, 1, temp);
+    }
 
+    splitItems(itemFrom: InventorySlot, itemTo: InventorySlot) {
+        if (itemFrom.item.id !== itemTo.item.id && !itemTo.isEmpty()) {
+            throw new Error(`Slot not available to split stack of ${itemFrom.item.id}`);
+        }
+
+        if (itemFrom.amount % 2 == 0){
+            const halfAmount = itemFrom.amount / 2;
+            itemFrom.loseItems(halfAmount);
+            itemTo.gainItems(halfAmount);
+        }
+        else{
+            const splitAmount = (itemFrom.amount - 1) / 2;
+            itemFrom.loseItems(splitAmount);
+            itemTo.gainItems(splitAmount);
+        }
     }
 
     consumeItem(index: number, amount: number = 1): boolean {
@@ -107,6 +129,7 @@ export class Inventory extends IgtFeature {
         while (amount > 0 && this.getTotalAmount(id) > 0) {
             const nonFullStackIndex = this.getIndexOfNonFullStack(id)
             const indexToUse = nonFullStackIndex !== -1 ? nonFullStackIndex : this.getIndexOfItem(id);
+            console.warn(indexToUse);
             if (indexToUse === -1) {
                 throw Error(`Index of item ${id} to lose is -1. This suggests an error in inventory management`);
             }

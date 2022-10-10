@@ -7,10 +7,8 @@
     <div class="flex flex-row flex-wrap w-full justify-start h-full overflow-y-scroll">
       <div v-for="(slot, index) in slots" :key="index + '-' + slot.item.id">
         <igt-inventory-slot :inventorySlot="slot"
-                            :is-selected="index === selectedIndex"
                             :index="index"
-                            @interact="interact"
-                            @click.native="selectItem(index)"
+                            @itemClick="itemClick"
         ></igt-inventory-slot>
       </div>
     </div>
@@ -30,6 +28,10 @@ export default {
   },
   props: {
     inventoryFeature: {
+      type: Inventory,
+      required: true,
+    },
+    heldItemFeature:{
       type: Inventory,
       required: true,
     },
@@ -55,6 +57,9 @@ export default {
     interact(data) {
       this.inventoryFeature.interactIndices(data.from, data.to)
       this.selectedIndex = data.to
+    },
+    itemClick(data) {
+      this.inventoryFeature.swapBetweenInventories(0, data.from, this.heldItemFeature)
     },
     consumeItem(data) {
       this.inventoryFeature.consumeItem(this.selectedIndex, data.amount)
