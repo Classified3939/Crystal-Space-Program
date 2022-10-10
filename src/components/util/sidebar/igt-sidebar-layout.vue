@@ -40,8 +40,8 @@
         </nav>
       </div>
 
-      <div class="flex-1 flex flex-col overflow-hidden">
-        <header class="flex justify-between items-center p-6">
+      <div class="flex-1 flex flex-col ml-5 overflow-hidden">
+        <header class="flex justify-between items-center p-3">
           <div class="flex items-center space-x-4 lg:space-x-0">
             <button @click="sidebarOpen = true"
                     class="text-gray-500 dark:text-gray-300 focus:outline-none lg:hidden">
@@ -50,20 +50,15 @@
                       stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-
-            <div>
-              <h1 v-if=activeTab class="text-2xl font-medium text-gray-800 dark:text-white">{{ activeTab.name }}</h1>
-            </div>
           </div>
-
-
         </header>
 
-        <main class="flex-1 overflow-x-hidden overflow-y-auto">
-          <div class="container mx-auto px-6 py-8 h-full">
+        <main class="flex-1 overflow-x-auto overflow-y-auto">
+          <div class="container w-full h-5/6">
             <div
-                class="grid place-items-center text-gray-500 dark:text-gray-300 text-xl h-full border-4 border-gray-300 shadow-md">
-              <div class="w-full h-full">
+                class="grid place-items-start text-gray-500 dark:text-gray-300 text-xl h-full border-4 border-gray-300 shadow-md">
+              <div class="w-full h-fit">
+                <h1 v-if=activeTab class="p-3 text-2xl font-medium text-gray-800 dark:text-white">{{ activeTab.name }}</h1>
                 <slot></slot>
               </div>
             </div>

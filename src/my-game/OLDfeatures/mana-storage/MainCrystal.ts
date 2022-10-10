@@ -3,7 +3,7 @@ import { CurrencyType } from "@/my-game/features/wallet/CurrencyType";
 import { CspAddWallet } from "@/components/mixins/CspAddWallet";
 import { AbstractResource } from "@/my-game/features/resources/AbstractResource";
 import { BlankResource } from "@/my-game/features/resources/BlankResource";
-import { MyFeatures } from "@/my-game/MyFeatures";
+import { MyFeatures } from "@/my-game/Features";
 
 export class MainCrystal extends CspAddWallet(IgtFeature){
 

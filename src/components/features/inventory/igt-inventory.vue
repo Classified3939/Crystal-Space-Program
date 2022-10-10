@@ -1,9 +1,10 @@
 <template>
-  <igt-feature>
-    <div class="flex flex-row flex-wrap justify-center">
+  <igt-feature :containerClass="'bg-gray-200 dark:bg-gray-700 max-w-sm h-80'">
+    <div class="flex flex-row flex-wrap w-1/3 justify-start">
+      Inventory
     </div>
 
-    <div class="flex flex-row flex-wrap justify-center sm:justify-start">
+    <div class="flex flex-row flex-wrap w-full justify-start h-full overflow-y-scroll">
       <div v-for="(slot, index) in slots" :key="index + '-' + slot.item.id">
         <igt-inventory-slot :inventorySlot="slot"
                             :is-selected="index === selectedIndex"
@@ -13,32 +14,23 @@
         ></igt-inventory-slot>
       </div>
     </div>
-
-    <igt-inventory-slot-highlight
-        v-if="showHighlight"
-        :selected-inventory-slot="selectedSlot"
-        @consume="consumeItem"
-        @drop="dropStack"
-    ></igt-inventory-slot-highlight>
   </igt-feature>
 </template>
 
 <script>
 import IgtFeature from "@/components/util/igt-feature";
 import IgtInventorySlot from "@/components/features/inventory/igt-inventory-slot";
-import IgtInventorySlotHighlight from "@/components/features/inventory/igt-inventory-slot-highlight";
-import {IgtInventory} from "incremental-game-template";
+import {Inventory} from "@/my-game/features/inventory/Inventory";
 
 export default {
   name: "igt-inventory",
   components: {
-    IgtInventorySlotHighlight,
     IgtInventorySlot,
     IgtFeature
   },
   props: {
     inventoryFeature: {
-      type: IgtInventory,
+      type: Inventory,
       required: true,
     },
   },
@@ -49,7 +41,7 @@ export default {
   },
   computed: {
     slots() {
-      return this.inventory.slots;
+      return this.inventoryFeature.slots;
     },
     selectedSlot() {
       return this.slots[this.selectedIndex];
@@ -61,14 +53,14 @@ export default {
 
   methods: {
     interact(data) {
-      this.inventory.interactIndices(data.from, data.to)
+      this.inventoryFeature.interactIndices(data.from, data.to)
       this.selectedIndex = data.to
     },
     consumeItem(data) {
-      this.inventory.consumeItem(this.selectedIndex, data.amount)
+      this.inventoryFeature.consumeItem(this.selectedIndex, data.amount)
     },
     dropStack() {
-      this.inventory.dropStack(this.selectedIndex)
+      this.inventoryFeature.dropStack(this.selectedIndex)
     },
     selectItem(index) {
       this.selectedIndex = index;

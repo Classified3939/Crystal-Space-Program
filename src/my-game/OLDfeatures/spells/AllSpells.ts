@@ -3,7 +3,7 @@ import { GainComprehensionSpell } from "@/my-game/features/spells/GainComprehens
 import { SpellSaveData } from "@/my-game/features/spells/Templates/SpellSaveData";
 import { AbstractSpell } from "@/my-game/features/spells/Templates/AbstractSpell";
 import { GainCrystalSpell } from "./GainCrystalSpell";
-import { MyFeatures } from "@/my-game/MyFeatures";
+import { MyFeatures } from "@/my-game/Features";
 import { AbsorbInfraredSpell } from "./AbsorbInfraredSpell";
 import { AbsorbRedSpell } from "./AbsorbRedSpell";
 

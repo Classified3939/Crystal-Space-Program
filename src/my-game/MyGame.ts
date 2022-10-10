@@ -1,6 +1,5 @@
 import {Currency, IgtGame} from "incremental-game-template";
-import {MyFeatures} from "@/my-game/MyFeatures";
-import { CurrencyType } from "./features/wallet/CurrencyType";
+import {Features} from "@/my-game/Features";
 
 export class MyGame extends IgtGame {
 [x: string]: any;
@@ -8,17 +7,15 @@ export class MyGame extends IgtGame {
     // @TODO Update TICK_DURATION to an appropriate value
     protected readonly TICK_DURATION: number = 0.05;
 
-    features: MyFeatures;
+    features: Features;
 
-    constructor(features: MyFeatures) {
+    constructor(features: Features) {
         super();
         this.features = features;
-        this.features.wallet.gainCurrency(new Currency(100, CurrencyType.maxMana));
-        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxKnowledge));
-        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxInfra));
-        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxRed));
-        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxOrange));
-        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxYellow));
-        this.features.wallet.gainCurrency(new Currency(10, CurrencyType.maxGreen));
+    }
+
+    initialize(): void {
+        super.initialize();
+        this.features.mainInventory.gainItem(this.features.itemList.infraredCrystal, 1)
     }
 }

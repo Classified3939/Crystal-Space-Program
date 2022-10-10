@@ -1,7 +1,7 @@
 import { Currency, IgtFeature, SaveData} from "incremental-game-template";
 import { CurrencyType } from "@/my-game/features/wallet/CurrencyType";
 import { CspAddWallet } from "@/components/mixins/CspAddWallet";
-import { MyFeatures } from "@/my-game/MyFeatures";
+import { MyFeatures } from "@/my-game/Features";
 import { ManaResource } from "@/my-game/features/resources/ManaResource";
 import { AbstractResource } from "@/my-game/features/resources/AbstractResource";
 import { BlankResource } from "@/my-game/features/resources/BlankResource";
