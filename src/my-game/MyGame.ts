@@ -14,8 +14,4 @@ export class MyGame extends IgtGame {
         this.features = features;
     }
 
-    initialize(): void {
-        super.initialize();
-        this.features.mainInventory.gainItem(this.features.itemList.infraredCrystal, 1)
-    }
 }

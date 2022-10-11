@@ -1,6 +1,7 @@
 <template>
   <div class="w-16 h-16 lg:w-20 lg:h-20 b-2 bg-gray-500 m-2 p-2 border-gray-300 border-4 text-white text-sm lg:text-md"
     @click="onClick(index)"
+    @contextmenu.prevent="onRightClick(index)"
   >
     <div v-if="!inventorySlot.isEmpty()">
       <div class="flex flex-col">
@@ -43,6 +44,9 @@ export default {
     },
     onClick(indexFrom){
       this.$emit('itemClick',{'from': indexFrom,})
+    },
+    onRightClick(indexFrom){
+      this.$emit('itemRightClick',{'from': indexFrom,})
     },
     /*startDrag(evt, index) {
       if (!this.canDrag) {

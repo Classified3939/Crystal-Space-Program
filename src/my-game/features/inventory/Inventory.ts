@@ -68,17 +68,35 @@ export class Inventory extends IgtFeature {
     }
     
     swapBetweenInventories(indexFrom: number, indexTo: number, otherInventory: Inventory){
-        const temp = otherInventory.slots[indexFrom];
-        otherInventory.slots.splice(indexFrom, 1, this.slots[indexTo]);
-        this.slots.splice(indexTo, 1, temp);
+        const itemFrom = this.slots[indexFrom];
+        const itemTo = otherInventory.slots[indexTo];
+        if (itemFrom.item.id === itemTo.item.id) {
+            this.mergeItems(itemFrom, itemTo);
+            if (itemFrom.amount == 0){
+                itemFrom.item = new EmptyItem();
+            }
+            return;
+        }
+        const temp = this.slots[indexFrom];
+        this.slots.splice(indexFrom, 1, otherInventory.slots[indexTo]);
+        otherInventory.slots.splice(indexTo, 1, new InventorySlot(new EmptyItem(), 0));
+        otherInventory.slots[indexTo].item = Object.create(temp.item);
+        otherInventory.slots[indexTo].amount = temp.amount;
     }
 
     splitItems(itemFrom: InventorySlot, itemTo: InventorySlot) {
         if (itemFrom.item.id !== itemTo.item.id && !itemTo.isEmpty()) {
-            throw new Error(`Slot not available to split stack of ${itemFrom.item.id}`);
+            return;
+        }
+        if (itemTo.isEmpty()){
+            itemTo.item = Object.create(itemFrom.item);
         }
 
-        if (itemFrom.amount % 2 == 0){
+        if (itemFrom.amount == 1){
+            itemFrom.loseItems(1);
+            itemTo.gainItems(1);
+        }
+        else if (itemFrom.amount % 2 == 0){
             const halfAmount = itemFrom.amount / 2;
             itemFrom.loseItems(halfAmount);
             itemTo.gainItems(halfAmount);
@@ -87,6 +105,10 @@ export class Inventory extends IgtFeature {
             const splitAmount = (itemFrom.amount - 1) / 2;
             itemFrom.loseItems(splitAmount);
             itemTo.gainItems(splitAmount);
+        }
+
+        if (itemFrom.amount == 0){
+            itemFrom.item = new EmptyItem();
         }
     }
 
@@ -129,7 +151,6 @@ export class Inventory extends IgtFeature {
         while (amount > 0 && this.getTotalAmount(id) > 0) {
             const nonFullStackIndex = this.getIndexOfNonFullStack(id)
             const indexToUse = nonFullStackIndex !== -1 ? nonFullStackIndex : this.getIndexOfItem(id);
-            console.warn(indexToUse);
             if (indexToUse === -1) {
                 throw Error(`Index of item ${id} to lose is -1. This suggests an error in inventory management`);
             }

@@ -5,10 +5,11 @@
     </div>
 
     <div class="flex flex-row flex-wrap w-full justify-start h-full overflow-y-scroll">
-      <div v-for="(slot, index) in slots" :key="index + '-' + slot.item.id">
+      <div v-for="(slot, index) in slots" :key="'mainInv' + index + '-' + slot.item.id">
         <igt-inventory-slot :inventorySlot="slot"
                             :index="index"
                             @itemClick="itemClick"
+                            @itemRightClick="itemRightClick"
         ></igt-inventory-slot>
       </div>
     </div>
@@ -59,7 +60,10 @@ export default {
       this.selectedIndex = data.to
     },
     itemClick(data) {
-      this.inventoryFeature.swapBetweenInventories(0, data.from, this.heldItemFeature)
+      this.inventoryFeature.swapBetweenInventories(data.from, 0, this.heldItemFeature)
+    },
+    itemRightClick(data) {
+      this.inventoryFeature.splitItems(this.inventoryFeature.slots[data.from],this.heldItemFeature.slots[0])
     },
     consumeItem(data) {
       this.inventoryFeature.consumeItem(this.selectedIndex, data.amount)
