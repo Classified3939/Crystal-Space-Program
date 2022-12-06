@@ -11,17 +11,17 @@ export class SkillList extends IgtFeature{
     constructor(){
         super('skills');
         this.skills = [
-            new Skill("Gathering", SkillId.Gathering, "Physical"),
-            new Skill("Exploration", SkillId.Exploration, "Physical"),
-            new Skill("Extraction", SkillId.Extraction, "Physical"),
-            new Skill("Processing", SkillId.Processing, "Physical"),
+            new Skill("Dexterity", SkillId.Dexterity, "Physical"),
+            new Skill("Speed", SkillId.Speed, "Physical"),
+            new Skill("Strength", SkillId.Strength, "Physical"),
+            new Skill("Endurance", SkillId.Endurance, "Physical"),
             new Skill("Construction",SkillId.Construction, "Physical"),
 
             new Skill("Absorption", SkillId.Absorption, "Mental"),
             new Skill("Perception", SkillId.Perception, "Mental"),
             new Skill("Intelligence", SkillId.Intelligence, "Mental"),
             new Skill("Spell-Casting", SkillId.SpellCasting, "Mental"),
-            new Skill("Communication", SkillId.Communication, "Mental"),
+            new Skill("Social", SkillId.Social, "Mental"),
 
             new Skill("Close Combat",SkillId.CloseCombat,"Combat"),
             new Skill("Ranged Combat",SkillId.RangedCombat,"Combat"),

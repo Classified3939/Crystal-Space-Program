@@ -8,7 +8,7 @@ Vue.filter('numberFormat', function (value: number) {
         return "";
     }
     if (value == Infinity){
-        return "Infinity"
+        return "MAX"
     }
     const len = String(Math.floor(value)).length;
     if (len < 4){

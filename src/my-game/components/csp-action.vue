@@ -5,9 +5,15 @@
         <p class="text-center text-white">{{this.action.description }}</p>
         <span class="text-center text-white"> 
             <span class="fa fa-clock"/> {{this.action.duration / this.action.skill.reward | numberFormat }}&nbsp;
-            <span class="fas fa-arrow-alt-circle-up"/> {{this.action.duration | numberFormat}}
+            <span class="fas fa-arrow-alt-circle-up"/> {{this.action.duration | numberFormat}}&nbsp;
+            <span class="fas fa-drumstick-bite"/> {{this.action.drain}}
         </span>
-        <igt-progress-bar v-if="this.action.duration / this.action.skill.reward > 0.1" :percentage="progressPercentage"></igt-progress-bar>
+        <igt-progress-bar v-if="(((this.action.currentProgress <= this.action.duration) && 
+                    (this.action.duration / this.action.skill.reward > 0.1)) && this.action.isStarted)"
+            :percentage="progressPercentage"></igt-progress-bar>
+        <igt-progress-bar v-else-if="(this.action.duration / this.action.skill.reward > 0.1
+                    || !this.action.isStarted)"
+            :percentage="progressPercentage" fgClass="bg-blue-500"></igt-progress-bar>
         <igt-progress-bar v-else-if="this.action.isStarted" :percentage="100"></igt-progress-bar>
         <igt-progress-bar v-else :percentage="0"></igt-progress-bar>
       </div>

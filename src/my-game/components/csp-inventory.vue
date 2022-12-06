@@ -5,8 +5,9 @@
                 Food
                 <div class="flex flex-col">
                     <div v-for="food in foods" :key="food.id">
-                        <p v-if="food.item.name != 'Empty'">&emsp;{{food.amount | numberFormat}} / {{food.item.maxStack | numberFormat}}  {{food.item.name}}</p>
-                        <p v-else>&emsp;None</p>
+                        <div v-if="food.item.name != 'Empty'">&nbsp;{{food.amount | numberFormat}} / {{food.item.maxStack | numberFormat}}  {{food.item.name}}
+                            &nbsp;<span class="fas fa-apple-alt"/>{{food.item.foodValue}}</div>
+                        <div v-else>&emsp;None</div>
                     </div>
                 </div>
             </igt-feature>
