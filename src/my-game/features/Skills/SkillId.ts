@@ -1,0 +1,16 @@
+export enum SkillId {
+    Gathering,
+    Exploration,
+    Extraction,
+    Processing,
+    Construction,
+    Absorption,
+    Perception,
+    Intelligence,
+    SpellCasting,
+    Communication,
+    CloseCombat,
+    RangedCombat,
+    MagicCombat,
+    Blank,
+}

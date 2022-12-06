@@ -1,25 +1,25 @@
 <template>
   <div>
-
-    <div class="relative pt-1">
+    <div class="relative pt-1 w-100">
       <div class="flex justify-between">
-        <p>Lvl. {{ expLevel.getLevel() }} / {{ expLevel.maxLevel }}</p>
-        <p>{{ progress.actual | numberFormat }} / {{ progress.target  | numberFormat }}</p>
-
+        <p class="flex">Lvl. {{ expLevel.getLevel() }}</p>
+        <p>
+          {{ progress.actual | numberFormat }} /
+          {{ progress.target | numberFormat }}
+        </p>
       </div>
       <igt-progress-bar :percentage="progressPercentage"></igt-progress-bar>
-
     </div>
   </div>
 </template>
 
 <script>
 import IgtProgressBar from "@/components/util/igt-progress-bar";
-import {IgtExpLevel} from "incremental-game-template";
+import { IgtExpLevel } from "incremental-game-template";
 
 export default {
   name: "igt-exp-level",
-  components: {IgtProgressBar},
+  components: { IgtProgressBar },
   props: {
     expLevel: {
       type: IgtExpLevel,
@@ -32,12 +32,9 @@ export default {
     },
     progressPercentage() {
       return this.progress.getPercentage();
-    }
+    },
   },
-
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

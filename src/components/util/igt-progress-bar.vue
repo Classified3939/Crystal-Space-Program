@@ -17,7 +17,7 @@ export default {
     },
     bgClass: {
       type: String,
-      default: 'bg-pink-200'
+      default: 'bg-csp-white'
     },
     fgClass: {
       type: String,
