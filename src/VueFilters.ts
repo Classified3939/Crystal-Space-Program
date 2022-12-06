@@ -1,10 +1,34 @@
 import Vue from 'vue'
+import Vue2Filters from 'vue2-filters'
+
+Vue.use(Vue2Filters)
 
 Vue.filter('numberFormat', function (value: number) {
     if (value == undefined) {
         return "";
     }
-    return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (value == Infinity){
+        return "Infinity"
+    }
+    const len = String(Math.floor(value)).length;
+    if (len < 4){
+        return value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    else if (len < 7){
+        return (value/1e3).toFixed(2) + "K"
+    }
+    else if (len < 10){
+        return (value/1e6).toFixed(2) + "M"
+    }
+    else if (len < 13){
+        return (value/1e9).toFixed(2) + "B"
+    }
+    else if (len < 16){
+        return (value/1e12).toFixed(2) + "T"
+    }
+    else{
+        return value.toExponential(2).replace("e+","e");
+    }
 })
 
 Vue.filter('dateFormat', function (date: Date) {
