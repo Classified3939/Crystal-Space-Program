@@ -104,6 +104,16 @@ export class Inventory extends IgtFeature{
         return types;
     }
 
+    getItemAmount(item: AbstractItem): number{
+        const index = this.indexOfItem(item.id);
+        if (index === -1){
+            return 0;
+        }
+        else{
+            return this.slots[index].amount;
+        }
+    } 
+
     load(data: InventorySaveData): void {
         if(!data.slots){
             return

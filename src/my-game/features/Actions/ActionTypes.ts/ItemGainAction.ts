@@ -1,7 +1,7 @@
 import { Features } from "@/my-game/Features";
-import { Inventory } from "../Inventory/Inventory";
-import { AbstractItem } from "../Items/Base/AbstractItem";
-import { ItemType } from "../Items/Base/ItemType";
+import { Inventory } from "../../Inventory/Inventory";
+import { AbstractItem } from "../../Items/Base/AbstractItem";
+import { ItemType } from "../../Items/Base/ItemType";
 import { SkillAction } from "./SkillAction";
 
 export class ItemGainAction extends SkillAction{
@@ -9,7 +9,7 @@ export class ItemGainAction extends SkillAction{
     amount: number
     _inventory: Inventory = undefined as unknown as Inventory
 
-    constructor(description: string, duration: number, item: AbstractItem, amount: number, drain: number){
+    constructor(description: string, duration: number, drain: number, item: AbstractItem, amount: number){
         super(description, duration, drain);
         this.item = item;
         this.amount = amount;
@@ -21,8 +21,13 @@ export class ItemGainAction extends SkillAction{
         }
     }
 
+    canPerform(): boolean {
+        return !this._inventory.hasMaxOfItem(this.item);
+    }
+
     gainReward(): boolean {
         this._inventory.gainItem(this.item,this.amount);
+        this.currentProgress = 0;
         return !(this._inventory.hasMaxOfItem(this.item));
     }
 }

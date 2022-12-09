@@ -4,23 +4,23 @@ import { Skill } from "./Skill";
 import { SkillId } from "./SkillId";
 import { SkillSaveData } from "./SkillSaveData";
 
-export class SkillList extends IgtFeature{
+export class AllSkills extends IgtFeature{
 
     skills: Skill[];
 
     constructor(){
         super('skills');
         this.skills = [
-            new Skill("Dexterity", SkillId.Dexterity, "Physical"),
-            new Skill("Speed", SkillId.Speed, "Physical"),
-            new Skill("Strength", SkillId.Strength, "Physical"),
-            new Skill("Endurance", SkillId.Endurance, "Physical"),
+            new Skill("Gathering", SkillId.Gathering, "Physical"),
+            new Skill("Exploration", SkillId.Exploration, "Physical"),
+            new Skill("Tool Use", SkillId.ToolUse, "Physical"),
+            new Skill("Forging", SkillId.Forging, "Physical"),
             new Skill("Construction",SkillId.Construction, "Physical"),
 
             new Skill("Absorption", SkillId.Absorption, "Mental"),
             new Skill("Perception", SkillId.Perception, "Mental"),
             new Skill("Intelligence", SkillId.Intelligence, "Mental"),
-            new Skill("Spell-Casting", SkillId.SpellCasting, "Mental"),
+            new Skill("Spellcasting", SkillId.SpellCasting, "Mental"),
             new Skill("Social", SkillId.Social, "Mental"),
 
             new Skill("Close Combat",SkillId.CloseCombat,"Combat"),

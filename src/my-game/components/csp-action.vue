@@ -6,7 +6,7 @@
         <span class="text-center text-white"> 
             <span class="fa fa-clock"/> {{this.action.duration / this.action.skill.reward | numberFormat }}&nbsp;
             <span class="fas fa-arrow-alt-circle-up"/> {{this.action.duration | numberFormat}}&nbsp;
-            <span class="fas fa-drumstick-bite"/> {{this.action.drain}}
+            <span class="fas fa-utensils"/> {{this.action.drain}}
         </span>
         <igt-progress-bar v-if="(((this.action.currentProgress <= this.action.duration) && 
                     (this.action.duration / this.action.skill.reward > 0.1)) && this.action.isStarted)"

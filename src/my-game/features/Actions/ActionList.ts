@@ -1,29 +1,45 @@
 import { Features } from "@/my-game/Features";
-import { IgtFeature, SaveData } from "incremental-game-template";
-import { ItemList } from "../Items/ItemList";
-import { CaveMoss } from "../Items/ItemTypes/CaveMoss";
-import { SkillId } from "../Skills/SkillId";
+import { IgtFeature } from "incremental-game-template";
 import { ActionListSaveData } from "./ActionListSaveData";
 import { ActionSaveData } from "./ActionSaveData";
-import { ItemGainAction } from "./ItemGainAction";
-import { SkillAction } from "./SkillAction";
+import { ActionId } from "./ActionTypes.ts/ActionId";
+import { AllActions } from "./ActionTypes.ts/AllActions";
 import { SkillActionFeature } from "./SkillActionFeature";
 
 export class ActionList extends IgtFeature{
-    actions: SkillActionFeature[];
+    private actions: SkillActionFeature[];
 
     constructor(){
         super("action-list");
         this.actions = new Array<SkillActionFeature>();
-        this.actions.push(new SkillActionFeature(SkillId.Dexterity,new ItemGainAction("Gather Moss",3, new CaveMoss(), 1, 0)));
-        this.actions.push(new SkillActionFeature(SkillId.Speed,new SkillAction("Explore Cave", 5, 1)));
+        this.defaultActions();
     }
 
+    getActions(): SkillActionFeature[]{
+        return this.actions;
+    }
+
+    setActions(newActions: ActionId[]){
+        this.actions.splice(0);
+        for(let i = 0; i < newActions.length; i++){
+            this.actions.push(this.makeActionFeature(newActions[i]));
+        }
+    }
 
     initialize(features: Features): void {
         this.actions.forEach(action => {
             action.initialize(features);
         });
+    }
+
+    defaultActions(): void{
+        this.setActions(new Array<ActionId>(ActionId.GatherMoss,ActionId.ExploreCave));
+    }
+
+    makeActionFeature(id: ActionId): SkillActionFeature{
+        const skill = AllActions[id].skill;
+        const action = AllActions[id].action;
+        return new SkillActionFeature(skill,action);
     }
 
     update(delta: number): void {

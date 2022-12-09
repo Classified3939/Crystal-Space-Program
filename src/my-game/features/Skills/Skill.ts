@@ -1,4 +1,4 @@
-import { ContinuousExpLevel, Progress } from "incremental-game-template";
+import { ContinuousExpLevel } from "incremental-game-template";
 import { SkillId } from "@/my-game/Features/Skills/SkillId";
 import {ISimpleEvent, SimpleEventDispatcher} from "strongly-typed-events"
 

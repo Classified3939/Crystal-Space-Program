@@ -1,4 +1,4 @@
-import { SkillAction } from "./SkillAction";
+import { SkillAction } from "./ActionTypes.ts/SkillAction";
 import { IgtFeature } from "incremental-game-template";
 import { Features } from "@/my-game/Features";
 import { SkillId } from "../Skills/SkillId";
@@ -21,6 +21,7 @@ export class SkillActionFeature extends IgtFeature{
         if (this.skillAction.drain > 0 && this.skillAction.isStarted){
             const foodTypes = this._inventory.getHeldItemTypes();
             if (foodTypes.length <= 0){
+                this.skillAction.isStarted = false;
                 return;
             }
             const firstFood = foodTypes[0];
@@ -28,6 +29,7 @@ export class SkillActionFeature extends IgtFeature{
                 this._inventory.consumeItem(firstFood,(delta / firstFood.foodValue * this.skillAction.drain));
             }
             else{
+                this.skillAction.isStarted = false;
                 return;
             }
         }

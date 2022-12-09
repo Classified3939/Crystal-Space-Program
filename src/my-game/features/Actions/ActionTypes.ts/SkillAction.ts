@@ -1,7 +1,7 @@
 import { Features } from "@/my-game/Features";
 import { IgtAction } from "incremental-game-template";
-import { Skill } from "../Skills/Skill";
-import { SkillId } from "../Skills/SkillId";
+import { Skill } from "../../Skills/Skill";
+import { SkillId } from "../../Skills/SkillId";
 
 export class SkillAction extends IgtAction{
 
@@ -19,11 +19,12 @@ export class SkillAction extends IgtAction{
     }
 
     gainReward(): boolean{
-        console.log("TEST");
         return true;
     }
     
     stop(): void {
         this.isStarted = false;
     }
+
+
 }

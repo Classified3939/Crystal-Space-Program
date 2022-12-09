@@ -1,6 +1,6 @@
 import { Game } from "./my-game/Game";
 import { IgtSettings } from "incremental-game-template";
-import { SkillList } from "./my-game/features/Skills/SkillList";
+import { AllSkills } from "./my-game/features/Skills/AllSkills";
 import { ItemList } from "./my-game/features/Items/ItemList";
 import { Inventory } from "./my-game/features/Inventory/Inventory";
 import { ActionList } from "./my-game/features/Actions/ActionList";
@@ -21,7 +21,7 @@ export class App {
     return new Game({
       settings: new IgtSettings(),
       // Add your own features here.
-      skills: new SkillList(),
+      skills: new AllSkills(),
       actionList: new ActionList(),
       itemTypes: new ItemList(),
       foodInventory: new Inventory(),

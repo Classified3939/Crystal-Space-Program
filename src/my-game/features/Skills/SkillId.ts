@@ -1,8 +1,8 @@
 export enum SkillId {
-    Dexterity,
-    Speed,
-    Strength,
-    Endurance,
+    Gathering,
+    Exploration,
+    ToolUse,
+    Forging,
     Construction,
     Absorption,
     Perception,
