@@ -7,7 +7,8 @@ import { SkillAction } from "./SkillAction";
 export class ItemGainAction extends SkillAction{
     item: AbstractItem
     amount: number
-    _inventory: Inventory = undefined as unknown as Inventory
+    _inventory = undefined as unknown as Inventory;
+
 
     constructor(description: string, duration: number, drain: number, item: AbstractItem, amount: number){
         super(description, duration, drain);
@@ -15,7 +16,10 @@ export class ItemGainAction extends SkillAction{
         this.amount = amount;
     }
 
+    
     initialize(features: Features): void {
+        this.tickDuration =  Math.ceil(this.duration / this.skill.reward/0.05)
+        this._foodInventory = features.foodInventory;
         if (this.item.type == ItemType.Food){
             this._inventory = features.foodInventory;
         }
@@ -26,8 +30,10 @@ export class ItemGainAction extends SkillAction{
     }
 
     gainReward(): boolean {
+        //this.skill.roundExp();
         this._inventory.gainItem(this.item,this.amount);
         this.currentProgress = 0;
+        this.tickDuration = Math.ceil(this.duration / this.skill.reward/0.05);
         return !(this._inventory.hasMaxOfItem(this.item));
     }
 }

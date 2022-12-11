@@ -1,11 +1,11 @@
 import { LocationId } from "./LocationId";
 import { LocationType } from "./LocationType";
 
-export abstract class LocationIdentifier{
+export class LocationIdentifier{
     type: LocationType
     id: LocationId
 
-    protected constructor(type: LocationType, id: LocationId){
+    constructor(type: LocationType, id: LocationId){
         this.type = type;
         this.id = id;
     }

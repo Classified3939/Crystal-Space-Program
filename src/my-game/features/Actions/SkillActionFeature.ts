@@ -4,7 +4,6 @@ import { Features } from "@/my-game/Features";
 import { SkillId } from "../Skills/SkillId";
 import { ActionSaveData } from "./ActionSaveData";
 import { Inventory } from "../Inventory/Inventory";
-import { Food } from "../Items/Base/Food";
 
 export class SkillActionFeature extends IgtFeature{
     skillAction: SkillAction;
@@ -17,27 +16,20 @@ export class SkillActionFeature extends IgtFeature{
     this.skillId = skill;
 }
 
-    update(delta: number){
-        if (this.skillAction.drain > 0 && this.skillAction.isStarted){
-            const foodTypes = this._inventory.getHeldItemTypes();
-            if (foodTypes.length <= 0){
-                this.skillAction.isStarted = false;
-                return;
-            }
-            const firstFood = foodTypes[0];
-            if (firstFood instanceof(Food)){
-                this._inventory.consumeItem(firstFood,(delta / firstFood.foodValue * this.skillAction.drain));
-            }
-            else{
-                this.skillAction.isStarted = false;
-                return;
-            }
-        }
+    /*update(delta: number){
+        delta = Math.round(delta/0.05)*0.05;
+        //this.skillAction.consumeFood(delta);
+        //this.gainExpFromAction(delta);
+        
+    }*/
 
-        delta = delta * this.skillAction.skill.reward;
-        this.skillAction.perform(delta);
+    gainExpFromAction(amount: number): void{
+        this.skillAction.perform(amount*this.skillAction.skill.reward);
         if (this.skillAction.isStarted){
-            this.skillAction.skill.gainExperience(delta);
+            const tickDuration = Math.ceil(this.skillAction.duration / this.skillAction.skill.reward /
+            0.05)
+            console.log("tickduration",tickDuration);
+            this.skillAction.skill.gainExperience(this.skillAction.duration/tickDuration);
         }
         this.skillAction.skill.onLevelUp.subscribe(() => 
             this.skillAction.skill.setReward());

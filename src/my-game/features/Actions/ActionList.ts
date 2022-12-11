@@ -32,8 +32,19 @@ export class ActionList extends IgtFeature{
         });
     }
 
+    update(delta: number): void {
+        this.actions.forEach(action => {
+            if (!action.skillAction.isStarted){
+                //console.log(action.skillAction.tickDuration);
+                action.skillAction.tickDuration = 
+                    Math.ceil(action.skillAction.duration / action.skillAction.skill.reward/0.05);
+            }
+        })
+    }
+
+
     defaultActions(): void{
-        this.setActions(new Array<ActionId>(ActionId.GatherMoss,ActionId.ExploreCave));
+        this.setActions(new Array<ActionId>(ActionId.GatherMoss,ActionId.LookForExits));
     }
 
     makeActionFeature(id: ActionId): SkillActionFeature{
@@ -41,13 +52,6 @@ export class ActionList extends IgtFeature{
         const action = AllActions[id].action;
         return new SkillActionFeature(skill,action);
     }
-
-    update(delta: number): void {
-        this.actions.forEach(action => {
-            action.update(delta);
-        });
-    }
-
 
     load(data: ActionListSaveData): void {
         if(!data.actions){

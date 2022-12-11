@@ -29,7 +29,9 @@ export class InventorySlot{
     }
 
     loseItems(amount: number){
-        this.amount -= amount;
+        //console.log("Losing",amount);
+        this.amount = (this.amount * 1e4) - (amount*1e4);
+        this.amount = Math.round(this.amount) / 1e4;
         if (this.amount < 0){
             this.amount = 0;
         }

@@ -12,7 +12,7 @@ export class Skill extends ContinuousExpLevel{
 
     constructor(name: string, id: SkillId, type: string){
         super(1000, (level) =>{
-            return (1.1**level-1)*100
+            return Math.round(((1.1**level-1)*100)*100)/100
         });
 
         this.name = name;
@@ -31,7 +31,11 @@ export class Skill extends ContinuousExpLevel{
 
     gainExperience(amount: number): void {
         const oldLevel: number= this.getLevel();
-        this.exp += amount;
+        //console.log("Adding",Math.round(amount*1e4)/1e4)
+        const newExp = Math.round((this.exp+amount)*1e10)/1e10;
+        //console.log(newExp);
+        this.exp = Math.ceil((newExp)*1e9)/1e9;
+        console.log("EXP",this.exp);
         const newLevel: number = this.getLevel();
         if (newLevel > oldLevel){
             this._onLevelUp.dispatch(this);

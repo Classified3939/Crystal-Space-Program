@@ -1,4 +1,4 @@
 export enum ActionId{
     GatherMoss,
-    ExploreCave
+    LookForExits,
 }
