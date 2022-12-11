@@ -30,12 +30,11 @@ export class Skill extends ContinuousExpLevel{
     }
 
     gainExperience(amount: number): void {
+        console.log("added exp",amount);
         const oldLevel: number= this.getLevel();
-        //console.log("Adding",Math.round(amount*1e4)/1e4)
-        const newExp = Math.round((this.exp+amount)*1e10)/1e10;
-        //console.log(newExp);
-        this.exp = Math.ceil((newExp)*1e9)/1e9;
-        console.log("EXP",this.exp);
+        const newExp = Math.round((this.exp+amount)*1e7)/1e7;
+        this.exp = Math.ceil((newExp)*1e6)/1e6;
+        console.log("exp",this.exp)
         const newLevel: number = this.getLevel();
         if (newLevel > oldLevel){
             this._onLevelUp.dispatch(this);

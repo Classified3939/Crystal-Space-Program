@@ -11,6 +11,6 @@ interface SkillActionDetails{
 }
 
 export const AllActions: Record<ActionId,SkillActionDetails> = {
-    [ActionId.GatherMoss]: {skill: SkillId.Gathering, action: new ItemGainAction("Gather Moss",1,0,new CaveMoss(),1)},
-    [ActionId.LookForExits]: {skill: SkillId.Gathering, action: new SkillAction("Look for Exits",10,1)},
+    [ActionId.GatherMoss]: {skill: SkillId.Gathering, action: new ItemGainAction("Gather Moss",3,0,new CaveMoss(),1)},
+    [ActionId.LookForExits]: {skill: SkillId.Exploration, action: new SkillAction("Look for Exits",5,1)},
 }

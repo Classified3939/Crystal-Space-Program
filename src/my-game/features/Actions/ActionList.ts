@@ -5,9 +5,11 @@ import { ActionSaveData } from "./ActionSaveData";
 import { ActionId } from "./ActionTypes.ts/ActionId";
 import { AllActions } from "./ActionTypes.ts/AllActions";
 import { SkillActionFeature } from "./SkillActionFeature";
+const rafLoop = require('raf-loop');
 
 export class ActionList extends IgtFeature{
-    private actions: SkillActionFeature[];
+    actions: SkillActionFeature[];
+    engine: any = null;
 
     constructor(){
         super("action-list");
@@ -30,16 +32,23 @@ export class ActionList extends IgtFeature{
         this.actions.forEach(action => {
             action.initialize(features);
         });
+        this.engine = rafLoop((dt: number) =>{
+            this.actionUpdate(dt/1000);
+        });
+        this.engine.start();
     }
 
-    update(delta: number): void {
-        this.actions.forEach(action => {
+    actionUpdate(delta: number): void {
+        for (const action of this.actions){
             if (!action.skillAction.isStarted){
-                //console.log(action.skillAction.tickDuration);
+                action.skillAction.skill.setReward();
                 action.skillAction.tickDuration = 
-                    Math.ceil(action.skillAction.duration / action.skillAction.skill.reward/0.05);
+                    Math.ceil(action.skillAction.duration / action.skillAction.skill.reward/(1/60));
             }
-        })
+            else{
+                action.skillAction.run(delta,action.skillAction.tickDuration);
+            }
+        }
     }
 
 

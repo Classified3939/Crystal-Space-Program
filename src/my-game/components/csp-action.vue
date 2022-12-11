@@ -4,7 +4,7 @@
       <div class="flex flex-col w-full space-y-1">
         <p class="text-center text-white">{{this.action.description }}</p>
         <span class="text-center text-white"> 
-            <span class="fa fa-clock"/> {{this.action.tickDuration * 0.05 | numberFormat }}&nbsp;
+            <span class="fa fa-clock"/> {{this.action.tickDuration * (1/60) | numberFormat }}&nbsp;
             <span class="fas fa-arrow-alt-circle-up"/> {{this.action.duration | numberFormat}}&nbsp;
             <span class="fas fa-utensils"/> {{this.action.drain}}
         </span>

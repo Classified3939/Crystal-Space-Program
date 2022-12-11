@@ -22,12 +22,14 @@ export class SkillAction extends IgtAction{
 
     initialize(features: Features): void {
         this._foodInventory = features.foodInventory;
-        this.tickDuration = Math.ceil(this.duration / this.skill.reward/0.05)
+        this.tickDuration = Math.ceil(this.duration / this.skill.reward/(1/60))
     }
 
     gainReward(): boolean{
         this.currentProgress = 0;
-        this.tickDuration = Math.ceil(this.duration / this.skill.reward/0.05);
+        this.intervalNumber = 0;
+        this.skill.setReward();
+        this.tickDuration = Math.ceil(this.duration / this.skill.reward/(1/60));
         return false;
     }
 
@@ -37,11 +39,9 @@ export class SkillAction extends IgtAction{
             return false;
         }
 
-        this.tickDuration = Math.ceil(this.duration / this.skill.reward/0.05)
+        this.tickDuration = Math.ceil(this.duration / this.skill.reward/(1/60))
         this.isStarted = true;
 
-        this.intervalId = setInterval(()=> this.run(0.05,this.tickDuration),(1000*0.05));
-        console.log("start exp",this.skill.exp);
 
         return true;
     }
@@ -67,7 +67,7 @@ export class SkillAction extends IgtAction{
                 this.stop();
             }
             const firstFood = foodTypes[0];            
-            const toConsume = Math.round(amount*1e4)/1e4;
+            const toConsume = Math.round(amount*1e10)/1e10;
             console.log("Consuming",toConsume);
             this._foodInventory.consumeItem(firstFood,toConsume);
         }
@@ -75,11 +75,10 @@ export class SkillAction extends IgtAction{
 
     run(amount: number,tickDuration: number){
         this.intervalNumber ++;
-        console.log("Tick #",this.intervalNumber)
 
         if (this.intervalNumber > tickDuration){
             console.log("GHOST TICK");
-            if (this.isStarted && this.canPerform()){
+            if (!this.isStarted && this.canPerform()){
                 this.intervalNumber = 0;
                 this.start();
             }
@@ -101,24 +100,16 @@ export class SkillAction extends IgtAction{
 
         this.perform(amount*this.skill.reward);
 
-        console.log(Math.round(tickDuration));
-        console.log("GAINING EXP FROM RUN");
-        this.skill.gainExperience(this.duration/Math.round(tickDuration))
-        console.log("CONSUMING FOOD");
+        console.log(amount);
+        console.log(tickDuration);
+        this.skill.gainExperience((Math.round(amount*1e4)/1e4)*this.skill.reward);
         this.consumeFood(amount);
-        //console.log("EXP",this.skill.exp)
-        if (this.intervalNumber === this.tickDuration){
-            this.intervalNumber = 0;
-            console.log("SETTING REWARD");
-            this.skill.setReward();
-        }
     }
 
     repeatAction(): void {
         this.stop();
         this.currentProgress=0;
         this.intervalNumber = 0;
-        console.log("SETTING REWARD");
         this.skill.setReward();
         this.repeat--;
         this.start();
@@ -127,7 +118,6 @@ export class SkillAction extends IgtAction{
     stop(): void {
         if (this.intervalId){
             clearInterval(this.intervalId);
-            console.log("end exp",this.skill.exp)
         }
         this.isStarted = false;
     }
