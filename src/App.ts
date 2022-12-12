@@ -4,6 +4,8 @@ import { AllSkills } from "./my-game/features/Skills/AllSkills";
 import { ItemList } from "./my-game/features/Items/ItemList";
 import { Inventory } from "./my-game/features/Inventory/Inventory";
 import { ActionList } from "./my-game/features/Actions/ActionList";
+import { getEventListeners } from "events";
+import { AllListeners } from "./my-game/features/Listeners/AllListeners";
 
 export class App {
   static inProduction: boolean = process.env.NODE_ENV === "production";
@@ -25,6 +27,7 @@ export class App {
       actionList: new ActionList(),
       itemTypes: new ItemList(),
       foodInventory: new Inventory(),
+      eventListeners: new AllListeners(),
     });
   }
 }

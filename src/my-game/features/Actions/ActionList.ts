@@ -2,8 +2,8 @@ import { Features } from "@/my-game/Features";
 import { IgtFeature } from "incremental-game-template";
 import { ActionListSaveData } from "./ActionListSaveData";
 import { ActionSaveData } from "./ActionSaveData";
-import { ActionId } from "./ActionTypes.ts/ActionId";
-import { AllActions } from "./ActionTypes.ts/AllActions";
+import { ActionId } from "./ActionTypes/ActionId";
+import { AllActions } from "./ActionTypes/AllActions";
 import { SkillActionFeature } from "./SkillActionFeature";
 const rafLoop = require('raf-loop');
 

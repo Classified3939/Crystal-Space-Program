@@ -4,6 +4,7 @@ import { Inventory } from "../../Inventory/Inventory";
 import { Food } from "../../Items/Base/Food";
 import { Skill } from "../../Skills/Skill";
 import { SkillId } from "../../Skills/SkillId";
+import { EventId } from "../../Listeners/EventId";
 
 export class SkillAction extends IgtAction{
 
@@ -68,7 +69,6 @@ export class SkillAction extends IgtAction{
             }
             const firstFood = foodTypes[0];            
             const toConsume = Math.round(amount*1e10)/1e10;
-            console.log("Consuming",toConsume);
             this._foodInventory.consumeItem(firstFood,toConsume);
         }
     }
@@ -99,9 +99,6 @@ export class SkillAction extends IgtAction{
         }
 
         this.perform(amount*this.skill.reward);
-
-        console.log(amount);
-        console.log(tickDuration);
         this.skill.gainExperience((Math.round(amount*1e4)/1e4)*this.skill.reward);
         this.consumeFood(amount);
     }

@@ -1,4 +1,4 @@
-import { SkillAction } from "./ActionTypes.ts/SkillAction";
+import { SkillAction } from "./ActionTypes/SkillAction";
 import { IgtFeature } from "incremental-game-template";
 import { Features } from "@/my-game/Features";
 import { SkillId } from "../Skills/SkillId";
@@ -14,16 +14,9 @@ export class SkillActionFeature extends IgtFeature{
     super(action.description + '-action-feature');
     this.skillAction = action;
     this.skillId = skill;
-}
+    }
 
-    /*update(delta: number){
-        delta = Math.round(delta/0.05)*0.05;
-        //this.skillAction.consumeFood(delta);
-        //this.gainExpFromAction(delta);
-        
-    }*/
-
-    gainExpFromAction(amount: number): void{
+    /*gainExpFromAction(amount: number): void{
         this.skillAction.perform(amount*this.skillAction.skill.reward);
         if (this.skillAction.isStarted){
             const tickDuration = Math.ceil(this.skillAction.duration / this.skillAction.skill.reward /
@@ -33,7 +26,7 @@ export class SkillActionFeature extends IgtFeature{
         }
         this.skillAction.skill.onLevelUp.subscribe(() => 
             this.skillAction.skill.setReward());
-    }
+    }*/
 
     initialize(features: Features): void {
         this.skillAction.skill = features.skills.getSkill(this.skillId);

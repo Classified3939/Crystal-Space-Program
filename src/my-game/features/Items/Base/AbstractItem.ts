@@ -1,8 +1,9 @@
-import { Saveable, SaveData } from "incremental-game-template";
+import { Saveable } from "incremental-game-template";
 import { ItemId } from "./ItemId";
 import { ItemType } from "./ItemType";
+import { ItemSaveData } from "./ItemSaveData";
 
-export abstract class AbstractItem implements Saveable{
+export abstract class AbstractItem implements Saveable {
     name: string;
     id: ItemId;
     type: ItemType;
@@ -10,8 +11,8 @@ export abstract class AbstractItem implements Saveable{
     maxStack: number;
     saveKey: string
 
-    protected constructor(name: string, description: string, id: ItemId, type: ItemType, 
-        maxStack: number = Infinity){
+    protected constructor(name: string, description: string, id: ItemId, type: ItemType,
+        maxStack: number = Infinity) {
         this.name = name;
         this.description = description;
         this.id = id;
@@ -22,11 +23,14 @@ export abstract class AbstractItem implements Saveable{
 
 
 
-    save(): SaveData {
-     return {};
+    save(): ItemSaveData {
+        return { maxStack: this.maxStack };
     }
-    load(data: SaveData): void {
-        //Empty
+    load(data: ItemSaveData): void {
+        if (data.maxStack){
+            this.maxStack = data.maxStack;  
+        }
+
     }
-    
+
 }

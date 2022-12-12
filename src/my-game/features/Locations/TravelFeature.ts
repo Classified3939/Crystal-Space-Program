@@ -1,5 +1,7 @@
 import { IgtFeature, SaveData } from "incremental-game-template";
+import { LocationId } from "./LocationId";
 import { LocationIdentifier } from "./LocationIdentifier";
+import { LocationType } from "./LocationType";
 
 export class TravelFeature extends IgtFeature{
 
@@ -7,7 +9,7 @@ export class TravelFeature extends IgtFeature{
 
     constructor(){
         super("travel-feature");
-        this.playerLocation = new LocationIdentifier()
+        this.playerLocation = new LocationIdentifier(LocationType.StartArea,LocationId.MineshaftStartCave)
     }
 
     load(data: SaveData): void {
