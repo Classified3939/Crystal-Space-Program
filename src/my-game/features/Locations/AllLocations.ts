@@ -2,14 +2,13 @@ import { IgtFeature, NoRequirement } from "incremental-game-template";
 import { ActionId } from "../Actions/ActionTypes/ActionId";
 import { AllActions } from "../Actions/ActionTypes/AllActions";
 import { SkillActionFeature } from "../Actions/SkillActionFeature";
-import { equals, EventId, EventType } from "../Listeners/EventId";
+import { EventId, EventType } from "../Listeners/EventId";
 import {Location} from "./Location";
 import { LocationGroupName } from "./Base/LocationGroupName";
 import { LocationId } from "./Base/LocationId";
 import { LocationIdentifier } from "./Base/LocationIdentifier";
 import { AllLocationSaveData, LocationGroupSaveData, LocationSaveData } from "./LocationSaveData";
-import { LocationType } from "./Base/LocationType";
-import { ActionList } from "../Actions/ActionList";
+import { LocationType } from "./Base/LocationType"
 import { Features } from "@/my-game/Features";
 import { PlayerLocationFeature } from "./PlayerLocationFeature";
 
@@ -37,24 +36,28 @@ playerLocation = undefined as unknown as PlayerLocationFeature
                     new LocationIdentifier(LocationType.StartArea,LocationId.MineshaftStartCave),
                     "The Beginning",
                     new Array<SkillActionFeature>(
-                        this.makeActionFeature(ActionId.GatherMoss),
-                        this.makeActionFeature(ActionId.LookForExits),
+                        this.makeActionFeature(ActionId.GatherFood,name),
+                        this.makeActionFeature(ActionId.LookForExits,name),
+                        this.makeActionFeature(ActionId.LeaveArea,name),
                     ),
                     new NoRequirement(),
-                    new Map<EventId,boolean>([
+                    new Map<EventId, boolean>([
                         [
                             {type:EventType.Nothing, name:""},
-                            true
+                            true,
                         ],
                         [
                             {type:EventType.GainItem, name:"caveMoss"},
-                            false
-                        ]
+                            false,
+                        ],
+                        [
+                            {type:EventType.RevealArea, name:"exits"},
+                            false,
+                        ],
                     ]),
                 )
             ]
         }
-
         this.locationGroups.set(name,locations);
     }
 
@@ -64,9 +67,10 @@ playerLocation = undefined as unknown as PlayerLocationFeature
         }
     }
 
-    makeActionFeature(id: ActionId): SkillActionFeature{
-        const skill = AllActions[id].skill;
-        const action = AllActions[id].action;
+    makeActionFeature(id: ActionId, area: LocationGroupName): SkillActionFeature{
+        const fullAction = AllActions.find(e=>e.actionId===id&&e.area===area)!;
+        const skill = fullAction.actionDetails.skill;
+        const action = fullAction.actionDetails.action;
         return new SkillActionFeature(skill,action);
     }
 
@@ -80,15 +84,16 @@ playerLocation = undefined as unknown as PlayerLocationFeature
             const groupData = data.locationGroups.find(l => l.locationGroupName === groupName)!;
             console.log(groupData);
             for (const loc of group){
-                const locData = groupData.locations.find(l => l.identifier.equals(loc.identifier))!
+                const locData = groupData.locations.find(l => loc.identifier.equals(l.identifier))!
                 console.log("locData",locData);
                 for (const event of locData.events){
-                    console.log("event",event);
-                    loc.actionRequirements.set(event,locData.unlocked[locData.events.indexOf(event)]);
+                    const key = Array.from(loc.actionRequirements.keys()).find(k => k.name === event.name && k.type === event.type)!;
+                    loc.actionRequirements.set(key,locData.unlocked[locData.events.indexOf(event)]);
                 }
             }
         }
         this.playerLocation.updateActions();
+        this.playerLocation.actionList.loadFromSave();
     }
     save(): AllLocationSaveData {
         const allSave = new Array<LocationGroupSaveData>();

@@ -1,6 +1,7 @@
 export enum EventType{
     Nothing,
     Reset,
+    Lock,
     RevealArea,
     GainItem,
 }

@@ -1,4 +1,4 @@
-import { IgtFeature, SaveData } from "incremental-game-template";
+import { IgtFeature } from "incremental-game-template";
 import { AllLocations } from "./AllLocations";
 import { LocationType } from "./Base/LocationType";
 import {Location} from "./Location";
@@ -7,7 +7,6 @@ import { ActionList } from "../Actions/ActionList";
 import { AllListeners } from "../Listeners/AllListeners";
 import { LocationGroupName } from "./Base/LocationGroupName";
 import { PlayerLocationSaveData } from "./PlayerLocationSaveData";
-import { LocationIdentifier } from "./Base/LocationIdentifier";
 
 export class PlayerLocationFeature extends IgtFeature{
 
@@ -29,18 +28,24 @@ export class PlayerLocationFeature extends IgtFeature{
         this.playerLocation = this.locationGroup.find(l => l.identifier.type === LocationType.StartArea)!;
         this.actionList = features.actionList;
         this.listeners = features.eventListeners;
-        this.listeners.eventFired.subscribe(e =>{
-            for (const location of this.locationGroup){
-                location.checkRequirements(e);
-                this.updateActions();
-                this.updateActions();
-            }
-        })
         this.updateActions();
     }
 
     updateActions(): void{
+        this.listeners.eventFired.unsub(e =>{
+            for (const location of this.locationGroup){
+                location.checkRequirements(e);
+            }
+            this.updateActions();
+        })
         this.actionList.setActions(this.playerLocation!.getActions());
+        this.listeners.setActionListeners(this.actionList);
+        this.listeners.eventFired.one(e =>{
+            for (const location of this.locationGroup){
+                location.checkRequirements(e);
+            }
+            this.updateActions();
+        })
     }
 
 

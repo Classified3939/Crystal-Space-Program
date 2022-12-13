@@ -1,7 +1,8 @@
 import { App } from "@/App";
 import { Features } from "@/my-game/Features";
-import { IgtFeature } from "incremental-game-template";
+import { IgtFeature, SaveData } from "incremental-game-template";
 import { Inventory } from "../Inventory/Inventory";
+import { LocationGroupName } from "../Locations/Base/LocationGroupName";
 import { ActionListSaveData } from "./ActionListSaveData";
 import { ActionSaveData } from "./ActionSaveData";
 import { ActionId } from "./ActionTypes/ActionId";
@@ -11,6 +12,7 @@ const rafLoop = require('raf-loop');
 
 export class ActionList extends IgtFeature{
     features = undefined as unknown as Features;
+    actionSave = undefined as unknown as ActionListSaveData;
     actions: SkillActionFeature[];
     engine: any = null;
 
@@ -30,7 +32,7 @@ export class ActionList extends IgtFeature{
                 action.initialize(this.features);
             }
         }
-        console.log("newactions",newActions);
+        //console.log("newactions",newActions);
         this.actions.splice(0);
         this.actions.push(...newActions);
     }
@@ -62,22 +64,28 @@ export class ActionList extends IgtFeature{
 
     defaultActions(): void{
         this.setActions(new Array<SkillActionFeature>(
-            this.makeActionFeature(ActionId.GatherMoss),
+            this.makeActionFeature(ActionId.GatherFood,LocationGroupName.StartingMine),
             ));
     }
 
-    makeActionFeature(id: ActionId): SkillActionFeature{
-        const skill = AllActions[id].skill;
-        const action = AllActions[id].action;
+    makeActionFeature(id: ActionId, area: LocationGroupName): SkillActionFeature{
+        const fullAction = AllActions.find(e=>e.actionId===id&&e.area===area)!;
+        const skill = fullAction.actionDetails.skill;
+        const action = fullAction.actionDetails.action;
         return new SkillActionFeature(skill,action);
     }
 
     load(data: ActionListSaveData): void {
-        if(!data.actions){
+        this.actionSave = data;
+    }
+
+    loadFromSave(): void {
+
+        if(!this.actionSave.actions){
             return
         }
-        for (let i = 0; i < data.actions.length; i++){
-            const actionData: ActionSaveData = data.actions[i];
+        for (let i = 0; i < this.actionSave.actions.length; i++){
+            const actionData: ActionSaveData = this.actionSave.actions[i];
             if (this.actions[i]){
                 this.actions[i].load(actionData);
             }

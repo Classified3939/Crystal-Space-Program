@@ -8,8 +8,9 @@ export class EventActionListener extends EventListener{
     constructor(action: EventAction){
         super(action.event);
         this.action = action;
-        this.action.onActionFinish.subscribe(e => 
-            this._eventFired.dispatch(e));
+        this.action.onActionFinish.one(e=>{
+            this._eventFired.dispatch(e);
+        })
     }
 
 }

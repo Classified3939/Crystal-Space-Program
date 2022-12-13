@@ -9,10 +9,10 @@ import { AllSkills } from "./features/Skills/AllSkills";
 
 export interface Features extends IgtFeatures {
     skills: AllSkills,
-    actionList: ActionList,
     itemTypes: ItemList,
     foodInventory: Inventory,
     eventListeners: AllListeners,
     allLocations: AllLocations,
-    playerLocation: PlayerLocationFeature,
+    //playerLocation: PlayerLocationFeature,
+    actionList: ActionList,
 }

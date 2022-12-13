@@ -1,7 +1,7 @@
 import { NoRequirement, Requirement } from "incremental-game-template";
 import { SkillActionFeature } from "../Actions/SkillActionFeature";
 import { EventId, EventType } from "../Listeners/EventId";
-import { LocationIdentifier } from "./LocationIdentifier";
+import { LocationIdentifier } from "./Base/LocationIdentifier";
 
 export class Location{
     identifier: LocationIdentifier;
@@ -33,7 +33,7 @@ export class Location{
     }
 
     isActionUnlocked(element: SkillActionFeature, index: number, array: SkillActionFeature[]): boolean{
-        return Array.from(this.actionRequirements.values())[index];
+        return Array.from(this.actionRequirements.values())[index]
     }
 
     getActions(){

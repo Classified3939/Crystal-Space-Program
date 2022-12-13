@@ -27,6 +27,12 @@ export class AllListeners extends IgtFeature{
     }
 
     setActionListeners(actionList: ActionList){
+        console.log("SETTING ACTION LISTENERS")
+        for (const listener of this.actionListeners){
+            listener.eventFired.unsub(e=>{
+                this._eventFired.dispatch(e);
+            });
+        }
         function isEventAction(actionFeature: SkillActionFeature): boolean {
             return actionFeature.skillAction instanceof EventAction;
         }
@@ -35,20 +41,25 @@ export class AllListeners extends IgtFeature{
             this.actionListeners.push(new EventActionListener(eAction.skillAction as EventAction));
         }
         for (const listener of this.actionListeners){
-            listener.eventFired.sub(e=>{
-                console.log(e.name,e.type)
+            listener.eventFired.one(e=>{
                 this._eventFired.dispatch(e);
             });
         }
     }
 
     setInventoryListeners(inventory: Inventory, name: string){
+        for (const listener of this.inventoryListeners){
+            listener.eventFired.unsub(e=>{
+                console.log(e.name,e.type);
+                this._eventFired.dispatch(e);
+            })
+        }
         if (name === "food-inventory"){
             this.inventoryListeners.push(new InventoryListener(inventory,new CaveMoss(),5));
         }
-        
+
         for (const listener of this.inventoryListeners){
-            listener.eventFired.sub(e=>{
+            listener.eventFired.one(e=>{
                 console.log(e.name,e.type);
                 this._eventFired.dispatch(e);
             })

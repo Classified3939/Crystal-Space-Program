@@ -1,4 +1,5 @@
 export enum ActionId{
-    GatherMoss,
+    GatherFood,
     LookForExits,
+    LeaveArea,
 }
