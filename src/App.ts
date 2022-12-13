@@ -6,6 +6,8 @@ import { Inventory } from "./my-game/features/Inventory/Inventory";
 import { ActionList } from "./my-game/features/Actions/ActionList";
 import { getEventListeners } from "events";
 import { AllListeners } from "./my-game/features/Listeners/AllListeners";
+import { PlayerLocationFeature } from "./my-game/features/Locations/PlayerLocationFeature";
+import { AllLocations } from "./my-game/features/Locations/AllLocations";
 
 export class App {
   static inProduction: boolean = process.env.NODE_ENV === "production";
@@ -26,8 +28,10 @@ export class App {
       skills: new AllSkills(),
       actionList: new ActionList(),
       itemTypes: new ItemList(),
-      foodInventory: new Inventory(),
+      foodInventory: new Inventory("food"),
       eventListeners: new AllListeners(),
+      allLocations: new AllLocations(),
+      playerLocation: new PlayerLocationFeature(),
     });
   }
 }

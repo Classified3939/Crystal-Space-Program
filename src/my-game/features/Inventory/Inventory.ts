@@ -17,8 +17,8 @@ export class Inventory extends IgtFeature{
 
     private _onItemGain = new EventDispatcher<AbstractItem, number>();
 
-    constructor(){
-        super('inventory');
+    constructor(name: string){
+        super(name+'-inventory');
         this.slots = new Array(1).fill(new InventorySlot(new EmptyItem(), 0));
     }
 
@@ -54,6 +54,7 @@ export class Inventory extends IgtFeature{
             }
             else{
                 this.slots[itemSlot].gainItems(amount);
+                this._onItemGain.dispatch(item,this.slots[itemSlot].amount);
                 return true;
             }
         }
@@ -66,6 +67,7 @@ export class Inventory extends IgtFeature{
             else{
                 const newIndex = this.slots.push(new InventorySlot(item,0));
                 this.slots[newIndex].gainItems(amount);
+                this._onItemGain.dispatch(item,this.slots[itemSlot].amount);
                 return true;
             }
         }
@@ -126,7 +128,6 @@ export class Inventory extends IgtFeature{
 
             try {
                 const item = this._itemList[slotData.id];
-                item.load(slotData.data);
                 this.slots[i] = new InventorySlot(item, slotData.amount);
             }
             catch(e){
@@ -145,5 +146,9 @@ export class Inventory extends IgtFeature{
         return{
             slots: slots
         }
+    }
+
+    public get onItemGain(){
+        return this._onItemGain.asEvent();
     }
 }

@@ -13,4 +13,8 @@ export class LocationIdentifier{
     public toString(): string{
         return `${LocationType[this.type]}: ${this.id}`
     }
+
+    public equals(otherId: LocationIdentifier){
+        return this.type === otherId.type && this.id === otherId.id;
+    }
 }

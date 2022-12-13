@@ -1,5 +1,7 @@
+import { App } from "@/App";
 import { Features } from "@/my-game/Features";
 import { IgtFeature } from "incremental-game-template";
+import { Inventory } from "../Inventory/Inventory";
 import { ActionListSaveData } from "./ActionListSaveData";
 import { ActionSaveData } from "./ActionSaveData";
 import { ActionId } from "./ActionTypes/ActionId";
@@ -8,6 +10,7 @@ import { SkillActionFeature } from "./SkillActionFeature";
 const rafLoop = require('raf-loop');
 
 export class ActionList extends IgtFeature{
+    features = undefined as unknown as Features;
     actions: SkillActionFeature[];
     engine: any = null;
 
@@ -21,14 +24,19 @@ export class ActionList extends IgtFeature{
         return this.actions;
     }
 
-    setActions(newActions: ActionId[]){
-        this.actions.splice(0);
-        for(let i = 0; i < newActions.length; i++){
-            this.actions.push(this.makeActionFeature(newActions[i]));
+    setActions(newActions: SkillActionFeature[]){
+        if (this.features){
+            for (const action of newActions){
+                action.initialize(this.features);
+            }
         }
+        console.log("newactions",newActions);
+        this.actions.splice(0);
+        this.actions.push(...newActions);
     }
 
     initialize(features: Features): void {
+        this.features = features;
         this.actions.forEach(action => {
             action.initialize(features);
         });
@@ -53,7 +61,9 @@ export class ActionList extends IgtFeature{
 
 
     defaultActions(): void{
-        this.setActions(new Array<ActionId>(ActionId.GatherMoss,ActionId.LookForExits));
+        this.setActions(new Array<SkillActionFeature>(
+            this.makeActionFeature(ActionId.GatherMoss),
+            ));
     }
 
     makeActionFeature(id: ActionId): SkillActionFeature{
@@ -68,8 +78,9 @@ export class ActionList extends IgtFeature{
         }
         for (let i = 0; i < data.actions.length; i++){
             const actionData: ActionSaveData = data.actions[i];
-
-            this.actions[i].load(actionData);
+            if (this.actions[i]){
+                this.actions[i].load(actionData);
+            }
         }
     }
     save(): ActionListSaveData {

@@ -24,8 +24,6 @@ export class EventAction extends SkillAction{
         this.intervalNumber = 0;
         this.tickDuration = Math.ceil(this.duration / this.skill.reward/(1/60));
         this._onActionFinish.dispatch(this.event);
-        console.log("TEST");
-        //console.log(this.event);
         return false;
     }
 

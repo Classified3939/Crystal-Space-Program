@@ -11,22 +11,10 @@ export class SkillActionFeature extends IgtFeature{
     _inventory: Inventory = undefined as unknown as Inventory
 
     constructor(skill: SkillId, action: SkillAction){
-    super(action.description + '-action-feature');
-    this.skillAction = action;
-    this.skillId = skill;
+        super(action.description + '-action-feature');
+        this.skillAction = action;
+        this.skillId = skill;
     }
-
-    /*gainExpFromAction(amount: number): void{
-        this.skillAction.perform(amount*this.skillAction.skill.reward);
-        if (this.skillAction.isStarted){
-            const tickDuration = Math.ceil(this.skillAction.duration / this.skillAction.skill.reward /
-            0.05)
-            console.log("tickduration",tickDuration);
-            this.skillAction.skill.gainExperience(this.skillAction.duration/tickDuration);
-        }
-        this.skillAction.skill.onLevelUp.subscribe(() => 
-            this.skillAction.skill.setReward());
-    }*/
 
     initialize(features: Features): void {
         this.skillAction.skill = features.skills.getSkill(this.skillId);
