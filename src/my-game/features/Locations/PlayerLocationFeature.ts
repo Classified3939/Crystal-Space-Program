@@ -7,6 +7,8 @@ import { ActionList } from "../Actions/ActionList";
 import { AllListeners } from "../Listeners/AllListeners";
 import { LocationGroupName } from "./Base/LocationGroupName";
 import { PlayerLocationSaveData } from "./PlayerLocationSaveData";
+import { SkillActionFeature } from "../Actions/SkillActionFeature";
+import { Skill } from "../Skills/Skill";
 
 export class PlayerLocationFeature extends IgtFeature{
 
@@ -38,7 +40,11 @@ export class PlayerLocationFeature extends IgtFeature{
             }
             this.updateActions();
         })
-        this.actionList.setActions(this.playerLocation!.getActions());
+        const actions = new Array<SkillActionFeature>()
+        for (const i of this.playerLocation!.getActions()){
+            actions.push(i.skillFeature);
+        }
+        this.actionList.setActions(actions);
         this.listeners.setActionListeners(this.actionList);
         this.listeners.eventFired.one(e =>{
             for (const location of this.locationGroup){

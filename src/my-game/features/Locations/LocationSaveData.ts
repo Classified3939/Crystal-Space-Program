@@ -5,8 +5,7 @@ import { LocationIdentifier } from "./Base/LocationIdentifier";
 
 export interface LocationSaveData{
     identifier: LocationIdentifier;
-    events: EventId[];
-    unlocked: boolean[];
+    unlocked: boolean[]
 }
 
 export interface LocationGroupSaveData{

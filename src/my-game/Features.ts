@@ -13,6 +13,6 @@ export interface Features extends IgtFeatures {
     foodInventory: Inventory,
     eventListeners: AllListeners,
     allLocations: AllLocations,
-    //playerLocation: PlayerLocationFeature,
+    playerLocation: PlayerLocationFeature,
     actionList: ActionList,
 }

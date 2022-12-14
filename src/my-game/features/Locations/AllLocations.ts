@@ -11,6 +11,7 @@ import { AllLocationSaveData, LocationGroupSaveData, LocationSaveData } from "./
 import { LocationType } from "./Base/LocationType"
 import { Features } from "@/my-game/Features";
 import { PlayerLocationFeature } from "./PlayerLocationFeature";
+import { LocationAction } from "./Base/LocationAction";
 
 export class AllLocations extends IgtFeature{
 
@@ -35,26 +36,39 @@ playerLocation = undefined as unknown as PlayerLocationFeature
                 new Location(
                     new LocationIdentifier(LocationType.StartArea,LocationId.MineshaftStartCave),
                     "The Beginning",
-                    new Array<SkillActionFeature>(
-                        this.makeActionFeature(ActionId.GatherFood,name),
-                        this.makeActionFeature(ActionId.LookForExits,name),
-                        this.makeActionFeature(ActionId.LeaveArea,name),
-                    ),
                     new NoRequirement(),
-                    new Map<EventId, boolean>([
-                        [
-                            {type:EventType.Nothing, name:""},
-                            true,
-                        ],
-                        [
-                            {type:EventType.GainItem, name:"caveMoss"},
-                            false,
-                        ],
-                        [
-                            {type:EventType.RevealArea, name:"exits"},
-                            false,
-                        ],
-                    ]),
+                    new Array<LocationAction>(
+                        new LocationAction(
+                            this.makeActionFeature(ActionId.GatherFood,name),
+                            new Map<EventId,boolean>([
+                                [
+                                    {type:EventType.Nothing,name:""},true
+                                ]
+                            ]),
+                            true
+                        ),
+                        new LocationAction(
+                            this.makeActionFeature(ActionId.LookForExits,name),
+                            new Map<EventId,boolean>([
+                                [
+                                    {type:EventType.GainItem,name:"caveMoss"},true
+                                ],
+                                [ 
+                                    {type:EventType.RevealArea,name:"exits"},false
+                                ]
+                            ]),
+                            false
+                        ),
+                        new LocationAction(
+                            this.makeActionFeature(ActionId.LeaveArea,name),
+                            new Map<EventId,boolean>([
+                                [
+                                    {type:EventType.RevealArea,name:"exits"},true
+                                ],
+                            ]),
+                            false
+                        )
+                    )
                 )
             ]
         }
@@ -84,11 +98,9 @@ playerLocation = undefined as unknown as PlayerLocationFeature
             const groupData = data.locationGroups.find(l => l.locationGroupName === groupName)!;
             console.log(groupData);
             for (const loc of group){
-                const locData = groupData.locations.find(l => loc.identifier.equals(l.identifier))!
-                console.log("locData",locData);
-                for (const event of locData.events){
-                    const key = Array.from(loc.actionRequirements.keys()).find(k => k.name === event.name && k.type === event.type)!;
-                    loc.actionRequirements.set(key,locData.unlocked[locData.events.indexOf(event)]);
+                const locData = groupData.locations.find(l => l.identifier === loc.identifier)!
+                for (const action of loc.locationActions){
+                    action.active = locData.unlocked[loc.locationActions.indexOf(action)];
                 }
             }
         }
@@ -100,9 +112,10 @@ playerLocation = undefined as unknown as PlayerLocationFeature
         for (const groupName of this.locationGroupNames){
             const groupSave = new Array<LocationSaveData>()
             for (const loc of this.locationGroups.get(groupName)!){
-                const events = Array.from(loc.actionRequirements.keys());
-                const unlocked = Array.from(loc.actionRequirements.values());
-                const locSave = {identifier: loc.identifier, events:events, unlocked: unlocked};
+                const locSave = {identifier: loc.identifier, unlocked:new Array<boolean>()}
+                for (const action of loc.locationActions){
+                    locSave.unlocked.push(action.active);
+                }
                 groupSave.push(locSave);
             }
             allSave.push({locationGroupName:groupName,locations:groupSave});

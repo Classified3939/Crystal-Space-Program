@@ -1,60 +1,52 @@
 import { NoRequirement, Requirement } from "incremental-game-template";
 import { SkillActionFeature } from "../Actions/SkillActionFeature";
 import { EventId, EventType } from "../Listeners/EventId";
+import { LocationAction } from "./Base/LocationAction";
 import { LocationIdentifier } from "./Base/LocationIdentifier";
 
 export class Location{
     identifier: LocationIdentifier;
     displayName: string;
-
-    possibleActions: SkillActionFeature[];
-
     requirement: Requirement;
-
-    actionRequirements: Map<EventId,boolean>;
+    locationActions: LocationAction[];
 
     constructor(
             identifier: LocationIdentifier, 
             displayName: string, 
-            possibleActions: SkillActionFeature[] = [],
             requirement: Requirement = new NoRequirement(),
-            actionRequirements: Map<EventId,boolean>,
+            locationActions: LocationAction[],
         ){
 
         this.identifier = identifier;
         this.displayName = displayName;
-        this.possibleActions = possibleActions;
         this.requirement = requirement;
-        this.actionRequirements = actionRequirements
+        this.locationActions = locationActions;
     }
 
     canTravel(): boolean{
         return this.requirement.isCompleted;
     }
 
-    isActionUnlocked(element: SkillActionFeature, index: number, array: SkillActionFeature[]): boolean{
-        return Array.from(this.actionRequirements.values())[index]
-    }
-
     getActions(){
-        const values = Array.from(this.actionRequirements.values());
-        return this.possibleActions.filter(function(element, index, array){
-            return values[index];
-        })
+        return this.locationActions.filter((e)=>e.active)
     }
 
     checkRequirements(event: EventId){
         if (event.type !== EventType.Reset){
-            for (const condition of this.actionRequirements.keys()){
-                if (condition.name === event.name && condition.type === event.type){
-                    this.actionRequirements.set(condition,true);
+            for (const action of this.locationActions){
+                for (const actionEvent of action.affectedBy){
+                    if (actionEvent[0].name === event.name && actionEvent[0].type === event.type){
+                        action.active = actionEvent[1];
+                    }
                 }
             }
         }
         else{
-            for (const condition of this.actionRequirements.keys()){
-                if (condition.type !== EventType.Nothing){
-                    this.actionRequirements.set(condition,false);
+            for (const action of this.locationActions){
+                for (const actionEvent of action.affectedBy){
+                    if (actionEvent[0].type !== EventType.Nothing){
+                        action.active = actionEvent[1];
+                    }
                 }
             }
         }
