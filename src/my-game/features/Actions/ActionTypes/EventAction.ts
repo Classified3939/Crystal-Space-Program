@@ -1,6 +1,7 @@
 import { Features } from "@/my-game/Features";
 import { ISimpleEvent, SimpleEventDispatcher } from "strongly-typed-events";
 import { EventId } from "../../Listeners/EventId";
+import { LocationId } from "../../Locations/Base/LocationId";
 import { SkillAction } from "./SkillAction";
 
 export class EventAction extends SkillAction{
@@ -25,6 +26,10 @@ export class EventAction extends SkillAction{
         this.tickDuration = Math.ceil(this.duration / this.skill.reward/(1/60));
         this._onActionFinish.dispatch(this.event);
         return false;
+    }
+
+    setLocation(loc: LocationId){
+        this.event.location = loc;
     }
 
     public get onActionFinish(): ISimpleEvent<EventId>{

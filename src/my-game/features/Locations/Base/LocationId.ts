@@ -1,5 +1,7 @@
 export enum LocationId{
+    Any,
     MineshaftStartCave,
+    MineshaftCrystalCave,
     MineshaftRatCave,
     MineshaftHub,
     MineshaftForge,

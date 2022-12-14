@@ -6,6 +6,8 @@ import { EventType } from "../../Listeners/EventId";
 import { ItemGainAction } from "./ItemGainAction";
 import { SkillAction } from "./SkillAction";
 import { LocationGroupName } from "../../Locations/Base/LocationGroupName";
+import { LocationId } from "../../Locations/Base/LocationId";
+import { TravelAction } from "./TravelAction";
 
 interface SkillActionDetails{
     skill: SkillId;
@@ -36,7 +38,7 @@ export const AllActions = new Array<FullAction>(
     new FullAction(
         {
             skill: SkillId.Perception,
-            action: new EventAction("Look for Exits",5,1,{type:EventType.RevealArea,name:"exits"}),
+            action: new EventAction("Look for Exits",5,1,{type:EventType.RevealArea,name:"exits",location:LocationId.Any}),
         },
         ActionId.LookForExits,
         LocationGroupName.StartingMine
@@ -44,9 +46,9 @@ export const AllActions = new Array<FullAction>(
     new FullAction(
         {
             skill: SkillId.Exploration,
-            action: new SkillAction("Leave Cave",2,1),
+            action: new TravelAction("Leave Cave",2,1,LocationId.MineshaftCrystalCave),
         },
         ActionId.LeaveArea,
         LocationGroupName.StartingMine
-    )
+    ),
 )

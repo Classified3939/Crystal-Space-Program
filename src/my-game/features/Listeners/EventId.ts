@@ -1,16 +1,15 @@
+import { LocationId } from "../Locations/Base/LocationId";
+
 export enum EventType{
     Nothing,
     Reset,
-    Lock,
     RevealArea,
     GainItem,
+    Travel,
 }
 
 export interface EventId{
     type: EventType;
     name: string;
-}
-
-export function equals(event1: EventId, event2: EventId): boolean{
-    return (event1.name === event2.name && event1.type === event2.type);
+    location: LocationId;
 }

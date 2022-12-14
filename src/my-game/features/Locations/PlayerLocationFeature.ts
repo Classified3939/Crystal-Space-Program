@@ -8,7 +8,8 @@ import { AllListeners } from "../Listeners/AllListeners";
 import { LocationGroupName } from "./Base/LocationGroupName";
 import { PlayerLocationSaveData } from "./PlayerLocationSaveData";
 import { SkillActionFeature } from "../Actions/SkillActionFeature";
-import { Skill } from "../Skills/Skill";
+import { EventId, EventType } from "../Listeners/EventId";
+import { LocationId } from "./Base/LocationId";
 
 export class PlayerLocationFeature extends IgtFeature{
 
@@ -33,11 +34,17 @@ export class PlayerLocationFeature extends IgtFeature{
         this.updateActions();
     }
 
+    travel(location: LocationId): void{
+        this.playerLocation = this.locationGroup.find(l=>l.identifier.id===location)!;
+        this.listeners.setActionListeners(this.playerLocation!);
+        this.updateActions();
+    }
+
     updateActions(): void{
+        console.log("UPDATING ACTIONS")
         this.listeners.eventFired.unsub(e =>{
-            for (const location of this.locationGroup){
-                location.checkRequirements(e);
-            }
+            this.checkEvent(e);
+            console.log("RECURSION?")
             this.updateActions();
         })
         const actions = new Array<SkillActionFeature>()
@@ -45,26 +52,37 @@ export class PlayerLocationFeature extends IgtFeature{
             actions.push(i.skillFeature);
         }
         this.actionList.setActions(actions);
-        this.listeners.setActionListeners(this.actionList);
         this.listeners.eventFired.one(e =>{
-            for (const location of this.locationGroup){
-                location.checkRequirements(e);
-            }
+            this.checkEvent(e);
+            console.log("RECURSION?")
             this.updateActions();
         })
     }
 
+    checkEvent(event: EventId){
+        if (event.type === EventType.Travel){
+            this.travel(event.location)
+        }
+        else{
+            for (const location of this.locationGroup){
+                location.checkRequirements(event);
+            }
+        }
+    }
+
 
     load(data: PlayerLocationSaveData): void {
-        if (!data.locationGroupName){
+        if (data.locationGroupName === null){
             return
         }
         this.locationGroupName = data.locationGroupName;
         this.locationGroup = this.locations.locationGroups.get(this.locationGroupName)!;
-        this.playerLocation = this.locationGroup.find(l => l.identifier === data.currentLocationIdentifier)!;
+        console.log(this.locationGroup.find(l => data.currentLocationIdentifier.id === l.identifier.id)!.identifier.id);
+        this.travel(this.locationGroup.find(l => data.currentLocationIdentifier.id === l.identifier.id)!.identifier.id);
     }
         
     save(): PlayerLocationSaveData {
+        console.log(this.locationGroupName);
         return {locationGroupName: this.locationGroupName, currentLocationIdentifier:this.playerLocation!.identifier}
     }
 }

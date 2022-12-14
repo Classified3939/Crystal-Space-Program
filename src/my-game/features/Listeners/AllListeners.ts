@@ -1,11 +1,13 @@
 import { Features } from "@/my-game/Features";
 import { IgtFeature, SaveData } from "incremental-game-template";
 import { SimpleEventDispatcher } from "strongly-typed-events";
-import { ActionList } from "../Actions/ActionList";
+import {Location} from "@/my-game/Features/Locations/Location"
 import { EventAction } from "../Actions/ActionTypes/EventAction";
 import { SkillActionFeature } from "../Actions/SkillActionFeature";
 import { Inventory } from "../Inventory/Inventory";
 import { CaveMoss } from "../Items/ItemTypes/CaveMoss";
+import { AllLocations } from "../Locations/AllLocations";
+import { LocationGroupName } from "../Locations/Base/LocationGroupName";
 import { EventActionListener } from "./EventActionListener";
 import { EventId } from "./EventId";
 import { InventoryListener } from "./InventoryListener";
@@ -13,6 +15,7 @@ import { InventoryListener } from "./InventoryListener";
 export class AllListeners extends IgtFeature{
     actionListeners: EventActionListener[];
     inventoryListeners: InventoryListener[];
+    allLocations = undefined as unknown as AllLocations;
     private _eventFired = new SimpleEventDispatcher<EventId>();
 
     constructor(){
@@ -22,12 +25,13 @@ export class AllListeners extends IgtFeature{
     }
 
     initialize(features: Features): void {
-        this.setActionListeners(features.actionList)
+        this.allLocations = features.allLocations;
+        this.setActionListeners(this.allLocations.locationGroups.get(LocationGroupName.StartingMine)![0]!)
         this.setInventoryListeners(features.foodInventory,features.foodInventory.saveKey);
     }
 
-    setActionListeners(actionList: ActionList){
-        console.log("SETTING ACTION LISTENERS")
+    setActionListeners(location: Location){
+        console.log("SETTING ACTION LISTENERS FOR",location.displayName);
         for (const listener of this.actionListeners){
             listener.eventFired.unsub(e=>{
                 this._eventFired.dispatch(e);
@@ -36,15 +40,16 @@ export class AllListeners extends IgtFeature{
         function isEventAction(actionFeature: SkillActionFeature): boolean {
             return actionFeature.skillAction instanceof EventAction;
         }
-        const eventActions = actionList.actions.filter(isEventAction);
+        const eventActions = location.locationActions.filter(e=>isEventAction(e.skillFeature));
         for (const eAction of eventActions){
-            this.actionListeners.push(new EventActionListener(eAction.skillAction as EventAction));
+            this.actionListeners.push(new EventActionListener(eAction.skillFeature.skillAction as EventAction));
         }
         for (const listener of this.actionListeners){
             listener.eventFired.one(e=>{
                 this._eventFired.dispatch(e);
             });
         }
+        console.log("FINISHED SETTING LISTENERS");
     }
 
     setInventoryListeners(inventory: Inventory, name: string){
