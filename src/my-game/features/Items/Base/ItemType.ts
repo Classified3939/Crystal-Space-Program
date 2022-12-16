@@ -1,5 +1,6 @@
 export enum ItemType{
     Empty,
     Food,
-    Material
+    Material,
+    Crystal,
 }

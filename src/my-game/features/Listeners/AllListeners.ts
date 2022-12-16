@@ -1,7 +1,7 @@
 import { Features } from "@/my-game/Features";
 import { IgtFeature, SaveData } from "incremental-game-template";
 import { SimpleEventDispatcher } from "strongly-typed-events";
-import {Location} from "@/my-game/Features/Locations/Location"
+import { Location } from "@/my-game/Features/Locations/Location"
 import { EventAction } from "../Actions/ActionTypes/EventAction";
 import { SkillActionFeature } from "../Actions/SkillActionFeature";
 import { Inventory } from "../Inventory/Inventory";
@@ -11,14 +11,20 @@ import { LocationGroupName } from "../Locations/Base/LocationGroupName";
 import { EventActionListener } from "./EventActionListener";
 import { EventId } from "./EventId";
 import { InventoryListener } from "./InventoryListener";
+import { PlayerLocationFeature } from "../Locations/PlayerLocationFeature";
+import { LocationId } from "../Locations/Base/LocationId";
+import { InfraredCrystal } from "../Items/ItemTypes/InfraredCrystal";
 
-export class AllListeners extends IgtFeature{
+export class AllListeners extends IgtFeature {
     actionListeners: EventActionListener[];
     inventoryListeners: InventoryListener[];
     allLocations = undefined as unknown as AllLocations;
+    playerLocation = undefined as unknown as PlayerLocationFeature;
+    foodInventory = undefined as unknown as Inventory;
+    crystalInventory = undefined as unknown as Inventory;
     private _eventFired = new SimpleEventDispatcher<EventId>();
 
-    constructor(){
+    constructor() {
         super("listeners")
         this.actionListeners = new Array<EventActionListener>();
         this.inventoryListeners = new Array<InventoryListener>();
@@ -26,57 +32,69 @@ export class AllListeners extends IgtFeature{
 
     initialize(features: Features): void {
         this.allLocations = features.allLocations;
-        this.setActionListeners(this.allLocations.locationGroups.get(LocationGroupName.StartingMine)![0]!)
-        this.setInventoryListeners(features.foodInventory,features.foodInventory.saveKey);
+        this.playerLocation = features.playerLocation;
+        this.foodInventory = features.foodInventory;
+        this.crystalInventory = features.crystalInventory;
     }
 
-    setActionListeners(location: Location){
-        console.log("SETTING ACTION LISTENERS FOR",location.displayName);
-        for (const listener of this.actionListeners){
-            listener.eventFired.unsub(e=>{
+    setActionListeners(location: Location) {
+        console.log("SETTING ACTION LISTENERS FOR", location.displayName);
+        for (const listener of this.actionListeners) {
+            listener.eventFired.unsub(e => {
+                console.log(e.name, e.type);
                 this._eventFired.dispatch(e);
             });
         }
+        this.actionListeners.splice(0);
         function isEventAction(actionFeature: SkillActionFeature): boolean {
             return actionFeature.skillAction instanceof EventAction;
         }
-        const eventActions = location.locationActions.filter(e=>isEventAction(e.skillFeature));
-        for (const eAction of eventActions){
+        const eventActions = location.locationActions.filter(e => isEventAction(e.skillFeature));
+        for (const eAction of eventActions) {
             this.actionListeners.push(new EventActionListener(eAction.skillFeature.skillAction as EventAction));
         }
-        for (const listener of this.actionListeners){
-            listener.eventFired.one(e=>{
+        for (const listener of this.actionListeners) {
+            listener.eventFired.one(e => {
+                console.log(e.name, e.type);
                 this._eventFired.dispatch(e);
             });
         }
         console.log("FINISHED SETTING LISTENERS");
     }
 
-    setInventoryListeners(inventory: Inventory, name: string){
-        for (const listener of this.inventoryListeners){
-            listener.eventFired.unsub(e=>{
-                console.log(e.name,e.type);
+    setInventoryListeners(location: Location, name: string) {
+        console.log("SETTING INVENTORY LISTENERS FOR")
+        for (const listener of this.inventoryListeners) {
+            listener.eventFired.unsub(e => {
+                console.log(e.name, e.type);
                 this._eventFired.dispatch(e);
             })
         }
-        if (name === "food-inventory"){
-            this.inventoryListeners.push(new InventoryListener(inventory,new CaveMoss(),5));
+        this.inventoryListeners.splice(0);
+        if (name === "food-inventory") {
+            console.log("FOOD INVENTORY")
+            this.inventoryListeners.push(new InventoryListener(this.foodInventory, new CaveMoss(), 5, LocationId.Any));
         }
-
-        for (const listener of this.inventoryListeners){
-            listener.eventFired.one(e=>{
-                console.log(e.name,e.type);
+        else if (name === "crystal-inventory") {
+            console.log("CRYSTAL INVENTORY");
+            if (location.identifier.id === LocationId.MineshaftCrystalCave) {
+                this.inventoryListeners.push(new InventoryListener(this.crystalInventory, new InfraredCrystal(), 1, LocationId.MineshaftCrystalCave))
+            }
+        }
+        for (const listener of this.inventoryListeners) {
+            listener.eventFired.one(e => {
+                console.log(e.name, e.type);
                 this._eventFired.dispatch(e);
             })
         }
     }
 
-    public get eventFired(){
+    public get eventFired() {
         return this._eventFired.asEvent();
     }
 
     load(data: SaveData): void {
-     //Empty
+        //Empty
     }
     save(): SaveData {
         return {};

@@ -1,12 +1,12 @@
 <template>
   <igt-feature
-    style="height:45rem; width:20rem;"
+    style="width:100%;height:29rem;position:relative;top:-5rem"
     containerClass="justify-between bg-gray-200 dark:bg-gray-700"
   >
     Actions
     <div
       v-for="actionFeature in actionList"
-      :key="actionFeature.skillAction.description"
+      :key="actionFeature.skillAction.description" style="width:100%"
     >
       <csp-action :actionFeature="actionFeature"></csp-action>
     </div>

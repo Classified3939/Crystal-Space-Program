@@ -1,5 +1,5 @@
 <template>
-    <div class="m-1">
+    <div class="m-1" style="width:100%">
         <div class="m-1" :key="skill.id" v-for="skill in skills">
             {{skill.name}}
             <igt-exp-level :exp-level="skill"></igt-exp-level>

@@ -1,5 +1,5 @@
 <template>
-    <igt-feature style="width:20rem" containerClass="bg-gray-200 dark:bg-gray-700">
+    <igt-feature style="height:29rem;position:relative;top:-5rem" containerClass="bg-gray-200 dark:bg-gray-700">
             Inventory
             <igt-feature containerClass="bg-gray-200 dark:bg-gray-700 border-2">
                 Food
@@ -7,6 +7,15 @@
                     <div v-for="food in foods" :key="food.id">
                         <div v-if="food.item.name != 'Empty'">&nbsp;{{food.amount | numberFormat}} / {{food.item.maxStack | numberFormat}}  {{food.item.name}}
                             &nbsp;<span class="fas fa-apple-alt"/>{{food.item.foodValue}}</div>
+                        <div v-else>&emsp;None</div>
+                    </div>
+                </div>
+            </igt-feature>
+            <igt-feature containerClass="bg-gray-200 dark:bg-gray-700 border-2">
+                Crystals
+                <div class="flex flex-col">
+                    <div v-for="crystal in crystals" :key="crystal.id">
+                        <div v-if="crystal.item.name != 'Empty'">&nbsp;{{crystal.amount | numberFormat}} / {{crystal.item.maxStack | numberFormat}}  {{crystal.item.name}}</div>
                         <div v-else>&emsp;None</div>
                     </div>
                 </div>
@@ -24,12 +33,16 @@ export default{
     components: {IgtFeature},
     data(){
         return{
-            food: App.game.features.foodInventory
+            food: App.game.features.foodInventory,
+            crystal: App.game.features.crystalInventory
         }
     },
     computed:{
         foods(){
             return this.food.slots;
+        },
+        crystals(){
+            return this.crystal.slots;
         }
     },
 }

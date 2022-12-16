@@ -1,5 +1,6 @@
-import { IgtFeatures} from "incremental-game-template";
+import { IgtFeatures } from "incremental-game-template";
 import { ActionList } from "./features/Actions/ActionList";
+import { InfoDriver } from "./features/InfoBox/InfoDriver";
 import { Inventory } from "./features/Inventory/Inventory";
 import { ItemList } from "./features/Items/ItemList";
 import { AllListeners } from "./features/Listeners/AllListeners";
@@ -11,8 +12,10 @@ export interface Features extends IgtFeatures {
     skills: AllSkills,
     itemTypes: ItemList,
     foodInventory: Inventory,
+    crystalInventory: Inventory,
     eventListeners: AllListeners,
     allLocations: AllLocations,
     playerLocation: PlayerLocationFeature,
     actionList: ActionList,
+    infoBox: InfoDriver,
 }

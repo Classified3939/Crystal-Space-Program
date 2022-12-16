@@ -9,4 +9,6 @@ export class TravelAction extends EventAction{
         super(description,duration,drain,{type:EventType.Travel,name:"travel",location:location})
         this.location = location;
     }
+
+    
 }

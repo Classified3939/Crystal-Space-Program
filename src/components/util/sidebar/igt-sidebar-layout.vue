@@ -56,9 +56,9 @@
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto">
           <div class="container mx-2 px-1">
-            <div
+            <div style="width:100rem;height:49rem"
                 class="grid place-items-center text-gray-500 dark:text-gray-300 text-xl border-4 border-gray-300 shadow-md">
-              <div class="w-full">
+              <div style="width:99rem;height:49rem">
                 <slot></slot>
               </div>
             </div>

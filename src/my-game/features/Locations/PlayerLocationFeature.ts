@@ -1,7 +1,7 @@
 import { IgtFeature } from "incremental-game-template";
 import { AllLocations } from "./AllLocations";
 import { LocationType } from "./Base/LocationType";
-import {Location} from "./Location";
+import { Location } from "./Location";
 import { Features } from "@/my-game/Features";
 import { ActionList } from "../Actions/ActionList";
 import { AllListeners } from "../Listeners/AllListeners";
@@ -11,7 +11,7 @@ import { SkillActionFeature } from "../Actions/SkillActionFeature";
 import { EventId, EventType } from "../Listeners/EventId";
 import { LocationId } from "./Base/LocationId";
 
-export class PlayerLocationFeature extends IgtFeature{
+export class PlayerLocationFeature extends IgtFeature {
 
     locations = undefined as unknown as AllLocations;
     locationGroupName: LocationGroupName;
@@ -20,7 +20,7 @@ export class PlayerLocationFeature extends IgtFeature{
     actionList = undefined as unknown as ActionList;
     listeners = undefined as unknown as AllListeners;
 
-    constructor(){
+    constructor() {
         super("player-location-feature");
         this.locationGroupName = LocationGroupName.StartingMine
     }
@@ -31,40 +31,53 @@ export class PlayerLocationFeature extends IgtFeature{
         this.playerLocation = this.locationGroup.find(l => l.identifier.type === LocationType.StartArea)!;
         this.actionList = features.actionList;
         this.listeners = features.eventListeners;
-        this.updateActions();
-    }
-
-    travel(location: LocationId): void{
-        this.playerLocation = this.locationGroup.find(l=>l.identifier.id===location)!;
         this.listeners.setActionListeners(this.playerLocation!);
+        this.listeners.setInventoryListeners(this.playerLocation!, this.listeners.foodInventory.saveKey)
+        this.listeners.setInventoryListeners(this.playerLocation!, this.listeners.crystalInventory.saveKey)
         this.updateActions();
     }
 
-    updateActions(): void{
+    travel(location: LocationId): void {
+        for (const action of this.actionList.actions) {
+            action.stop();
+            action.skillAction.currentProgress = 0;
+            action.skillAction.isStarted = false;
+            action.skillAction.intervalNumber = 0;
+        }
+        this.playerLocation = this.locationGroup.find(l => l.identifier.id === location)!;
+        this.listeners.setActionListeners(this.playerLocation!);
+        this.listeners.setInventoryListeners(this.playerLocation!, this.listeners.foodInventory.saveKey)
+        this.listeners.setInventoryListeners(this.playerLocation!, this.listeners.crystalInventory.saveKey)
+        this.updateActions();
+    }
+
+    updateActions(): void {
         console.log("UPDATING ACTIONS")
-        this.listeners.eventFired.unsub(e =>{
+        this.listeners.eventFired.unsub(e => {
+            console.log("EVENT", e)
             this.checkEvent(e);
             console.log("RECURSION?")
             this.updateActions();
         })
         const actions = new Array<SkillActionFeature>()
-        for (const i of this.playerLocation!.getActions()){
+        for (const i of this.playerLocation!.getActions()) {
             actions.push(i.skillFeature);
         }
         this.actionList.setActions(actions);
-        this.listeners.eventFired.one(e =>{
+        this.listeners.eventFired.one(e => {
+            console.log("EVENT", e)
             this.checkEvent(e);
             console.log("RECURSION?")
             this.updateActions();
         })
     }
 
-    checkEvent(event: EventId){
-        if (event.type === EventType.Travel){
+    checkEvent(event: EventId) {
+        if (event.type === EventType.Travel) {
             this.travel(event.location)
         }
-        else{
-            for (const location of this.locationGroup){
+        else {
+            for (const location of this.locationGroup) {
                 location.checkRequirements(event);
             }
         }
@@ -72,7 +85,7 @@ export class PlayerLocationFeature extends IgtFeature{
 
 
     load(data: PlayerLocationSaveData): void {
-        if (data.locationGroupName === null){
+        if (data.locationGroupName === null) {
             return
         }
         this.locationGroupName = data.locationGroupName;
@@ -80,9 +93,9 @@ export class PlayerLocationFeature extends IgtFeature{
         console.log(this.locationGroup.find(l => data.currentLocationIdentifier.id === l.identifier.id)!.identifier.id);
         this.travel(this.locationGroup.find(l => data.currentLocationIdentifier.id === l.identifier.id)!.identifier.id);
     }
-        
+
     save(): PlayerLocationSaveData {
         console.log(this.locationGroupName);
-        return {locationGroupName: this.locationGroupName, currentLocationIdentifier:this.playerLocation!.identifier}
+        return { locationGroupName: this.locationGroupName, currentLocationIdentifier: this.playerLocation!.identifier }
     }
 }

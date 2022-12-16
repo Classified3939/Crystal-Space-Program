@@ -7,6 +7,7 @@ import { ActionList } from "./my-game/features/Actions/ActionList";
 import { AllListeners } from "./my-game/features/Listeners/AllListeners";
 import { PlayerLocationFeature } from "./my-game/features/Locations/PlayerLocationFeature";
 import { AllLocations } from "./my-game/features/Locations/AllLocations";
+import { InfoDriver } from "./my-game/features/InfoBox/InfoDriver";
 
 export class App {
   static inProduction: boolean = process.env.NODE_ENV === "production";
@@ -28,9 +29,11 @@ export class App {
       actionList: new ActionList(),
       itemTypes: new ItemList(),
       foodInventory: new Inventory("food"),
+      crystalInventory: new Inventory("crystal"),
       eventListeners: new AllListeners(),
       allLocations: new AllLocations(),
       playerLocation: new PlayerLocationFeature(),
+      infoBox: new InfoDriver(),
     });
   }
 }

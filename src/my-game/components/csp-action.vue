@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3 p-4 w-72 h-24 border-4 shadow-lg hover-highlight flex flex-row items-center" :class="this.btnColor"
+    <div style="height:6.5rem" class="mt-3 p-4 border-4 shadow-lg hover-highlight flex flex-row items-center" :class="this.btnColor"
          @click="action.toggle()">
       <div class="flex flex-col w-full space-y-1">
         <p class="text-center text-white">{{this.action.description }}</p>
