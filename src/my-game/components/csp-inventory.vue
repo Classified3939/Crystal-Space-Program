@@ -1,5 +1,5 @@
 <template>
-    <igt-feature style="height:29rem;position:relative;top:-5rem" containerClass="bg-gray-200 dark:bg-gray-700">
+    <igt-feature style="height:29rem;position:relative;top:-4.5rem" containerClass="bg-gray-200 dark:bg-gray-700">
             Inventory
             <igt-feature containerClass="bg-gray-200 dark:bg-gray-700 border-2">
                 Food

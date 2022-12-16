@@ -8,6 +8,7 @@ import { AllListeners } from "./my-game/features/Listeners/AllListeners";
 import { PlayerLocationFeature } from "./my-game/features/Locations/PlayerLocationFeature";
 import { AllLocations } from "./my-game/features/Locations/AllLocations";
 import { InfoDriver } from "./my-game/features/InfoBox/InfoDriver";
+import { CombatActionList } from "./my-game/features/Combat/CombatActionList";
 
 export class App {
   static inProduction: boolean = process.env.NODE_ENV === "production";
@@ -26,7 +27,7 @@ export class App {
       settings: new IgtSettings(),
       // Add your own features here.
       skills: new AllSkills(),
-      actionList: new ActionList(),
+      actionList: new ActionList("action-list"),
       itemTypes: new ItemList(),
       foodInventory: new Inventory("food"),
       crystalInventory: new Inventory("crystal"),
@@ -34,6 +35,7 @@ export class App {
       allLocations: new AllLocations(),
       playerLocation: new PlayerLocationFeature(),
       infoBox: new InfoDriver(),
+      combatActions: new CombatActionList(),
     });
   }
 }

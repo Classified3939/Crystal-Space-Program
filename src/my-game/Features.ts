@@ -1,5 +1,6 @@
 import { IgtFeatures } from "incremental-game-template";
 import { ActionList } from "./features/Actions/ActionList";
+import { CombatActionList } from "./features/Combat/CombatActionList";
 import { InfoDriver } from "./features/InfoBox/InfoDriver";
 import { Inventory } from "./features/Inventory/Inventory";
 import { ItemList } from "./features/Items/ItemList";
@@ -18,4 +19,5 @@ export interface Features extends IgtFeatures {
     playerLocation: PlayerLocationFeature,
     actionList: ActionList,
     infoBox: InfoDriver,
+    combatActions: CombatActionList,
 }

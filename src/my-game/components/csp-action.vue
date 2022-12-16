@@ -54,6 +54,9 @@
           else if (this.action.skill.type === "Mental"){
             return ("bg-blue-500 border-blue-700");
           }
+          else if (this.action.skill.type === ""){
+            return ("bg-gray-600 border-gray-800")
+          }
           else{
             return ("bg-green-500 border-green-700");
           }

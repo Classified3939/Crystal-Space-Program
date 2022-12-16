@@ -1,5 +1,5 @@
 <template>
-    <igt-feature>
+    <igt-feature style=height:48.5rem>
         <div>
             Info
         </div>

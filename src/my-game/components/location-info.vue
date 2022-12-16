@@ -1,5 +1,5 @@
 <template>
-    <igt-feature style="height:29rem;position:relative;top:-5rem">
+    <igt-feature style="height:29rem;position:relative;top:-4.5rem">
         <div>
             Location
         </div>

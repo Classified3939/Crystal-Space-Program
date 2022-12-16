@@ -4,4 +4,11 @@ export enum ActionId {
     LeaveArea,
     GatherCrystal,
     AbsorbCrystal,
+    BasicCloseAttack,
+    AdvancedCloseAttack,
+    BasicRangedAttack,
+    AdvancedRangedAttack,
+    BasicMagicAttack,
+    AdvancedMagicAttack,
+    LockedAttack,
 }

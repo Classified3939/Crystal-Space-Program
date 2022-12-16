@@ -1,6 +1,6 @@
 <template>
   <igt-feature
-    style="width:100%;height:29rem;position:relative;top:-5rem"
+    style="width:100%;height:29rem;position:relative;top:-4.5rem"
     containerClass="justify-between bg-gray-200 dark:bg-gray-700"
   >
     Actions

@@ -14,8 +14,8 @@ export class ActionList extends IgtFeature {
     actions: SkillActionFeature[];
     engine: any = null;
 
-    constructor() {
-        super("action-list");
+    constructor(saveKey: string) {
+        super(saveKey);
         this.actions = new Array<SkillActionFeature>();
         this.defaultActions();
     }

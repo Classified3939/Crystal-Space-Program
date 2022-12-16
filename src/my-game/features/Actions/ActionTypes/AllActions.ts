@@ -60,5 +60,21 @@ export const AllActions = new Array<FullAction>(
         },
         ActionId.GatherCrystal,
         LocationGroupName.StartingMine,
+    ),
+    new FullAction(
+        {
+            skill: SkillId.CloseCombat,
+            action: new SkillAction("Basic Punch", 2, 1)
+        },
+        ActionId.BasicCloseAttack,
+        LocationGroupName.StartingMine,
+    ),
+    new FullAction(
+        {
+            skill: SkillId.Blank,
+            action: new SkillAction("[Locked]", 0, 0)
+        },
+        ActionId.LockedAttack,
+        LocationGroupName.StartingMine,
     )
 )

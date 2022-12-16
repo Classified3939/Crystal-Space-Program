@@ -1,5 +1,5 @@
 <template>
-    <igt-feature containerClass="bg-gray-200 dark:bg-gray-700">
+    <igt-feature style="height:48.5rem" containerClass="bg-gray-200 dark:bg-gray-700">
         Skills
         <igt-tabs>
             <igt-tab name="Physical" :selected="true">
