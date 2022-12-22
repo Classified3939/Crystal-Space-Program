@@ -34,7 +34,7 @@ div{
 
 
 .feature-tab {
-    @apply p-4;
+    padding:1rem
 }
 
 .btn {

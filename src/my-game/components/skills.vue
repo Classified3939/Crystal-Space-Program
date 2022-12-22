@@ -1,33 +1,25 @@
 <template>
-    <igt-feature style="height:48.5rem" containerClass="bg-gray-200 dark:bg-gray-700">
+    <igt-feature style="height:20.35rem;padding:0rem;padding-top:1rem;width:105%" containerClass="bg-gray-200 dark:bg-gray-700">
         Skills
-        <igt-tabs>
-            <igt-tab name="Physical" :selected="true">
-                <skill-tab skillType="Physical"></skill-tab>
-            </igt-tab>
-            <igt-tab name="Mental">
-                <skill-tab skillType="Mental"></skill-tab>
-            </igt-tab>
-            <igt-tab name="Combat">
-                <skill-tab skillType="Combat"></skill-tab>
-            </igt-tab>
-        </igt-tabs>
+        <div class="pl-2 pt-1 grid grid-cols-2 grid-rows-6 border-2" style="width:96%;height:88%">
+        <div style="padding-right:.25rem;font-size:1.108rem" class="row-span-1 col-span-1" :key="skill.id" v-for="skill in skills">
+            <igt-exp-level :exp-level="skill"></igt-exp-level>
+        </div>
+    </div>
     </igt-feature>
 </template>
 
 <script>
 import {App} from "@/App.ts";
 import IgtFeature from "@/components/util/igt-feature"
-import IgtTabs from "@/components/util/igt-tabs";
-import SkillTab from "@/my-game/components/skill-tab"
-import IgtTab from "@/components/util/igt-tab";
+import IgtExpLevel from "@/components/tools/exp-level/igt-exp-level";
 
 export default{
     name: "skills",
-    components: {IgtFeature, SkillTab, IgtTabs, IgtTab},
+    components: {IgtFeature,IgtExpLevel},
     data(){
         return{
-            skills: App.game.features.skills
+            skills: App.game.features.skills.skills.filter(e=>e.type!=="")
         }
     },
 }

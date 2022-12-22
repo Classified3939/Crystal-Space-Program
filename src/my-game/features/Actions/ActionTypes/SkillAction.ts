@@ -1,15 +1,14 @@
 import { Features } from "@/my-game/Features";
 import { IgtAction } from "incremental-game-template";
 import { Inventory } from "../../Inventory/Inventory";
-import { Food } from "../../Items/Base/Food";
 import { Skill } from "../../Skills/Skill";
 import { SkillId } from "../../Skills/SkillId";
-import { EventId } from "../../Listeners/EventId";
 
 export class SkillAction extends IgtAction {
 
     skill: Skill;
     drain: number;
+    repeatIfPaused: boolean = false;
     _foodInventory: Inventory = undefined as unknown as Inventory;
     intervalId: NodeJS.Timeout | null = null;
     intervalNumber: number = 0;
@@ -35,7 +34,7 @@ export class SkillAction extends IgtAction {
     }
 
     start(): boolean {
-        if (!this.canPerform() || (this.drain > 0 && !this.canConsumeFood())) {
+        if (!this.canPerform() || (this.drain > 0 && !this.adjustAmountWithFood(1e-6))) {
             this.currentProgress = 0;
             return false;
         }
@@ -47,35 +46,40 @@ export class SkillAction extends IgtAction {
         return true;
     }
 
-    canConsumeFood(): boolean {
+    adjustAmountWithFood(amount: number): number {
+        amount = Math.round(amount * 1e6) / 1e6
         if (this.drain <= 0) {
-            return true;
+            return amount;
         }
         const foodTypes = this._foodInventory.getHeldItemTypes();
         if (foodTypes.length <= 0) {
-            return false
+            return 0;
         }
-        const firstFood = foodTypes[0];
-        return firstFood instanceof (Food);
+        let foodAmount = 0;
+        for (let i = 0; i < foodTypes.length; i++) {
+            foodAmount += this._foodInventory.slots[i].amount;
+        }
+        foodAmount = Math.round(foodAmount * 1e4) / 1e4;
+        return Math.min(amount, foodAmount);
     }
 
     consumeFood(amount: number) {
         if (this.drain > 0) {
             const foodTypes = this._foodInventory.getHeldItemTypes();
-            if (!this.canConsumeFood()) {
-                this.currentProgress = 0;
-                this.intervalNumber = 0;
-                this.stop();
+            for (const food of foodTypes) {
+                const initialAmount = this._foodInventory.getItemAmount(food);
+                this._foodInventory.consumeItem(food, amount);
+                amount -= initialAmount
+                if (amount <= 0) {
+                    return;
+                }
             }
-            const firstFood = foodTypes[0];
-            const toConsume = Math.round(amount * 1e10) / 1e10;
-            this._foodInventory.consumeItem(firstFood, toConsume);
+
         }
     }
 
     run(amount: number, tickDuration: number) {
         this.intervalNumber++;
-
         if (this.intervalNumber > tickDuration) {
             console.log("GHOST TICK");
             if (!this.isStarted && this.canPerform()) {
@@ -90,21 +94,32 @@ export class SkillAction extends IgtAction {
             }
             return;
         }
-
-        if (!this.canConsumeFood()) {
+        let foodAmount = this.adjustAmountWithFood(amount);
+        if (foodAmount === 0) {
             this.stop();
             this.currentProgress = 0;
             this.intervalNumber = 0;
             return;
         }
+        if (foodAmount > this.duration) {
+            while (foodAmount > this.duration) {
+                console.log(foodAmount);
+                this.run(this.duration - this.getProgress().actual, tickDuration)
+                foodAmount = foodAmount - this.duration;
+                if (!this.canPerform() || !this.repeatIfPaused) {
+                    this.stop()
+                    return;
+                }
+            }
+            return;
+        }
 
-        this.perform(amount * this.skill.reward);
-        this.skill.gainExperience((Math.round(amount * 1e4) / 1e4) * this.skill.reward);
-        this.consumeFood(amount);
+        this.perform(foodAmount * this.skill.reward);
+        this.consumeFood(foodAmount);
+        this.skill.gainExperience((Math.round(foodAmount * 1e4) / 1e4) * this.skill.reward);
     }
 
     repeatAction(): void {
-        console.log("REPEATING");
         this.stop();
         this.currentProgress = 0;
         this.intervalNumber = 0;

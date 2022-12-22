@@ -22,7 +22,6 @@ export class AllLocations extends IgtFeature {
 
     constructor() {
         super("all-locations");
-        console.log(this.locationGroupNames);
         this.makeGroups();
     }
 
@@ -115,9 +114,7 @@ export class AllLocations extends IgtFeature {
         for (const groupName of this.locationGroupNames) {
             const group = this.locationGroups.get(groupName)!
             const groupData = data.locationGroups.find(l => l.locationGroupName === groupName)!;
-            console.log(groupData);
             for (const loc of group) {
-                console.log(groupData.locations);
                 const locData = groupData.locations.find(l => loc.identifier.equals(l.identifier))!;
                 for (const action of loc.locationActions) {
                     action.active = locData.unlocked[loc.locationActions.indexOf(action)];
@@ -138,13 +135,10 @@ export class AllLocations extends IgtFeature {
                     locSave.unlocked.push(action.active);
                     locSave.locked.push(action.locked);
                 }
-                console.log(locSave);
                 groupSave.push(locSave);
             }
             allSave.push({ locationGroupName: groupName, locations: groupSave });
         }
-
-        console.log({ locationGroups: allSave });
         return { locationGroups: allSave };
     }
 

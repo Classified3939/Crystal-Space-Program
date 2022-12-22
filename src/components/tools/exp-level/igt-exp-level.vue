@@ -1,14 +1,12 @@
 <template>
   <div>
-    <div class="relative pt-1 w-100">
+    <div class="relative pt-0 w-100">
       <div class="flex justify-between">
-        <p class="flex">Lvl. {{ expLevel.getLevel() }}</p>
-        <p>
-          {{ progress.actual | numberFormat }} /
-          {{ progress.target | numberFormat }}
-        </p>
+        <p v-if="expLevel.getLevel() !== expLevel.maxLevel" class="flex">{{expLevel.name}} {{ expLevel.getLevel() }}</p>
+        <p v-else class="flex">{{expLevel.name}} X</p>
       </div>
-      <igt-progress-bar :percentage="progressPercentage"></igt-progress-bar>
+      <igt-progress-bar v-if="expLevel.getLevel() !== expLevel.maxLevel" :percentage="progressPercentage"></igt-progress-bar>
+      <igt-progress-bar v-else :percentage=100></igt-progress-bar>
     </div>
   </div>
 </template>

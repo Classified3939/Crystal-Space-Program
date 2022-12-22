@@ -1,9 +1,9 @@
 <template>
-    <igt-feature style="height:29rem;position:relative;top:-4.5rem">
+    <igt-feature style="height:26.8rem;position:relative;top:-4.5rem">
         <div>
             Location
         </div>
-        <div style="width:100%;" class="flex flex-col">
+        <div style="width:100%;" class="flex flex-col border-2 p-2">
             <div class="flex text-lg" v-if="getLocation().planet !== '???'">Planet: {{getLocation().planet}}</div>
             <div class="flex text-lg" v-if="getLocation().area !== '???'">Area: {{getLocation().area}}</div>
             <div class="flex text-lg" >{{getLocation().desc}}</div>

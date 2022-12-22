@@ -1,7 +1,6 @@
 <template>
-    <div class="m-1" style="width:100%">
-        <div class="m-1" :key="skill.id" v-for="skill in skills">
-            {{skill.name}}
+    <div class="pl-0 grid grid-cols-2 grid-rows-2" style="width:100%">
+        <div class="row-span-1 col-span-1" :key="skill.id" v-for="skill in skills">
             <igt-exp-level :exp-level="skill"></igt-exp-level>
         </div>
     </div>

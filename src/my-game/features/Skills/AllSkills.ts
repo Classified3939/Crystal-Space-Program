@@ -12,20 +12,20 @@ export class AllSkills extends IgtFeature {
         super('skills');
         this.skills = [
             new Skill("Gathering", SkillId.Gathering, "Physical"),
-            new Skill("Exploration", SkillId.Exploration, "Physical"),
-            new Skill("Tool Use", SkillId.ToolUse, "Physical"),
-            new Skill("Forging", SkillId.Forging, "Physical"),
-            new Skill("Construction", SkillId.Construction, "Physical"),
-
             new Skill("Absorption", SkillId.Absorption, "Mental"),
+            new Skill("Exploration", SkillId.Exploration, "Physical"),
             new Skill("Perception", SkillId.Perception, "Mental"),
+            new Skill("Tool Use", SkillId.ToolUse, "Physical"),
             new Skill("Intelligence", SkillId.Intelligence, "Mental"),
+            new Skill("Forging", SkillId.Forging, "Physical"),
             new Skill("Spellcasting", SkillId.SpellCasting, "Mental"),
+            new Skill("Construction", SkillId.Construction, "Physical"),
             new Skill("Social", SkillId.Social, "Mental"),
-
             new Skill("Close Combat", SkillId.CloseCombat, "Combat"),
-            new Skill("Ranged Combat", SkillId.RangedCombat, "Combat"),
             new Skill("Magic Combat", SkillId.MagicCombat, "Combat"),
+
+            //new Skill("Bow Combat", SkillId.RangedCombat, "Combat"),
+
 
             new Skill("", SkillId.Blank, "")
         ]

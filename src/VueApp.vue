@@ -3,13 +3,15 @@
     <igt-notifications></igt-notifications>
     <igt-sidebar title="Crystal Space Program">
       <igt-sidebar-category name="Features"></igt-sidebar-category>
-      <igt-tab style="height:48rem" class="grid xl:grid-cols-5 grid-rows-2" name="Main" :selected="true">
-        <skills class="row-span-2"></skills>
-        <combat-tab class="col-span-3"></combat-tab>
-        <info-box class="row-span-2"></info-box>
-        <action-list></action-list>
-        <csp-inventory></csp-inventory>
-        <location-info></location-info>
+      <igt-tab style="height:48rem;grid-template-rows: repeat(25, minmax(0, 1fr));" class="grid xl:grid-cols-5" name="Main" :selected="true">
+        <igt-progress-bar style="height:100%;width:100%" class="col-span-5" :percentage=100></igt-progress-bar>
+        <igt-progress-bar fgClass="bg-blue-500" style="height:100%;width:100%" class="col-span-5" :percentage=100></igt-progress-bar>
+        <skills style="grid-row-start:3;grid-row-end:12" class="m-0 pl-0"></skills>
+        <combat-tab style="grid-row-start:3;grid-row-end:12" class="col-start-2 col-span-3"></combat-tab>
+        <info-box style="grid-row-start:3;grid-column-start:5;grid-row-end:32"></info-box>
+        <action-list style="grid-row-start:16" class="col-span-2" ></action-list>
+        <csp-inventory style="grid-row-start:16"></csp-inventory>
+        <location-info style="grid-row-start:16"></location-info>
       </igt-tab>
 
       <igt-sidebar-category name="Other"></igt-sidebar-category>
@@ -61,6 +63,7 @@ import IgtDeveloperPanel from "@/components/developer-panel/igt-developer-panel"
 import IgtSidebarCategory from "@/components/util/sidebar/igt-sidebar-category";
 import IgtSidebarExternalLink from "@/components/util/sidebar/igt-sidebar-external-link";
 import IgtSettings from "@/components/features/settings/igt-settings";
+import IgtProgressBar from "@/components/util/igt-progress-bar"
 
 export default {
   components: {
@@ -71,6 +74,7 @@ export default {
     IgtNotifications,
     IgtTab,
     IgtSidebar,
+    IgtProgressBar,
     Skills,
     ActionList,
     CspInventory,

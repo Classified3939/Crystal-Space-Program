@@ -1,11 +1,11 @@
 <template>
-    <igt-feature style=height:48.5rem>
+    <igt-feature style="width:105.5%;height:47rem;position:relative;left:-1rem">
         <div>
             Info
         </div>
-        <igt-feature style="height:45rem;overflow-y:scroll;padding:0%" containerClass="bg-gray-200 dark:bg-gray-700 p-0 overflow-ellipsis">
-            <igt-feature v-for="info in reverseArray()" :key="info.id" style="width:20rem;" containerClass="bg-gray-200 dark:bg-gray-700 text-sm p-0">
-                <div style="width:93%" class="border-2 overflow-ellipsis p-1" :class="getBorderType(info)">{{info.desc}}</div>
+        <igt-feature style="height:44rem;overflow-y:scroll;padding:0%" containerClass="bg-gray-200 dark:bg-gray-700 p-0 overflow-ellipsis border-2">
+            <igt-feature v-for="info in reverseArray()" :key="info.id" style="width:19rem;font-size:.97rem;line-height:1.16rem" containerClass="bg-gray-200 dark:bg-gray-700 p-2">
+                <div style="width:97.5%" class="border-2 overflow-ellipsis p-1" :class="getBorderType(info)">{{info.desc}}</div>
             </igt-feature>
         </igt-feature>
     </igt-feature>

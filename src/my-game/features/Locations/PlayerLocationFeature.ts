@@ -52,11 +52,8 @@ export class PlayerLocationFeature extends IgtFeature {
     }
 
     updateActions(): void {
-        console.log("UPDATING ACTIONS")
         this.listeners.eventFired.unsub(e => {
-            console.log("EVENT", e)
             this.checkEvent(e);
-            console.log("RECURSION?")
             this.updateActions();
         })
         const actions = new Array<SkillActionFeature>()
@@ -65,9 +62,7 @@ export class PlayerLocationFeature extends IgtFeature {
         }
         this.actionList.setActions(actions);
         this.listeners.eventFired.one(e => {
-            console.log("EVENT", e)
             this.checkEvent(e);
-            console.log("RECURSION?")
             this.updateActions();
         })
     }
@@ -90,12 +85,10 @@ export class PlayerLocationFeature extends IgtFeature {
         }
         this.locationGroupName = data.locationGroupName;
         this.locationGroup = this.locations.locationGroups.get(this.locationGroupName)!;
-        console.log(this.locationGroup.find(l => data.currentLocationIdentifier.id === l.identifier.id)!.identifier.id);
         this.travel(this.locationGroup.find(l => data.currentLocationIdentifier.id === l.identifier.id)!.identifier.id);
     }
 
     save(): PlayerLocationSaveData {
-        console.log(this.locationGroupName);
         return { locationGroupName: this.locationGroupName, currentLocationIdentifier: this.playerLocation!.identifier }
     }
 }

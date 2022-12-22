@@ -38,7 +38,6 @@ export class AllListeners extends IgtFeature {
     }
 
     setActionListeners(location: Location) {
-        console.log("SETTING ACTION LISTENERS FOR", location.displayName);
         for (const listener of this.actionListeners) {
             listener.eventFired.unsub(e => {
                 console.log(e.name, e.type);
@@ -59,11 +58,9 @@ export class AllListeners extends IgtFeature {
                 this._eventFired.dispatch(e);
             });
         }
-        console.log("FINISHED SETTING LISTENERS");
     }
 
     setInventoryListeners(location: Location, name: string) {
-        console.log("SETTING INVENTORY LISTENERS FOR")
         for (const listener of this.inventoryListeners) {
             listener.eventFired.unsub(e => {
                 console.log(e.name, e.type);
@@ -72,11 +69,9 @@ export class AllListeners extends IgtFeature {
         }
         this.inventoryListeners.splice(0);
         if (name === "food-inventory") {
-            console.log("FOOD INVENTORY")
             this.inventoryListeners.push(new InventoryListener(this.foodInventory, new CaveMoss(), 5, LocationId.Any));
         }
         else if (name === "crystal-inventory") {
-            console.log("CRYSTAL INVENTORY");
             if (location.identifier.id === LocationId.MineshaftCrystalCave) {
                 this.inventoryListeners.push(new InventoryListener(this.crystalInventory, new InfraredCrystal(), 1, LocationId.MineshaftCrystalCave))
             }

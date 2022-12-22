@@ -13,7 +13,7 @@ export class AllInfo {
         }
         else if (id === InfoEntryId.WelcomeInfo) {
             info.setDesc(
-                `Welcome To [Crystal Space Program]! A time-loop incremental game!\nLet's go over the user interface:\nYour [Skills] will go up while performing [Actions]. Each level of a [Skill] increases the speed of an [Action] by 5%.\n[Actions] are the heart of the game. They have 3 attributes listed: the time it takes to complete, the total exp you gain from doing it, and the [Food] drain multiplier.\nAn [Action]'s color will tell you what kind of [Skill] it grows. Green for physical, blue for mental, red for combat.\n[Food] is what keeps you going! Each action has a food drain per second (except for the first, lucky you), and will be cancelled if you run out.\nAlso, [Food] drain happens over time, so [Skill] levels will help you lose less total food.\nThat was a lot so let's get going!
+                `Welcome To [Crystal Space Program]! A time-loop incremental game!\nLet's go over the user interface:\nYour [Skills] will go up while performing [Actions]. Each level of a [Skill] increases the speed of an [Action] by 5%.\n[Actions] are the heart of the game. They have 2 attributes listed: the time it takes to complete and the [Food] drain multiplier.\nAn [Action]'s color will tell you what kind of [Skill] it grows. Green for regular, blue for travel, red for combat.\n[Food] is what keeps you going! Each action has a food drain per second (except for the first, lucky you), and will be cancelled if you run out.\nThat was a lot so let's get going!
                 `);
         }
         else if (id === InfoEntryId.MossGoal) {

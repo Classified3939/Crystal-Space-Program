@@ -14,11 +14,12 @@ export class ItemGainAction extends SkillAction {
         super(description, duration, drain);
         this.item = item;
         this.amount = amount;
+        this.repeatIfPaused = true;
     }
 
 
     initialize(features: Features): void {
-        this.tickDuration = Math.ceil(this.duration / this.skill.reward / (1 / 60))
+        this.tickDuration = Math.ceil(this.duration / this.skill.reward)
         this._foodInventory = features.foodInventory;
         if (this.item.type === ItemType.Food) {
             this._inventory = features.foodInventory;
@@ -33,11 +34,10 @@ export class ItemGainAction extends SkillAction {
     }
 
     gainReward(): boolean {
-        console.log(this.item, this.amount);
         this._inventory.gainItem(this.item, this.amount);
         this.currentProgress = 0;
         this.intervalNumber = 0;
-        this.tickDuration = Math.ceil(this.duration / this.skill.reward / (1 / 60));
+        this.tickDuration = Math.ceil(this.duration / this.skill.reward);
         return !(this._inventory.hasMaxOfItem(this.item));
     }
 }
