@@ -45,10 +45,6 @@
                       stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
-
-            <div>
-              <h1 v-if=activeTab class="text-2xl font-medium text-gray-800 dark:text-white">{{ activeTab.name }}</h1>
-            </div>
           </div>
 
 
@@ -56,9 +52,9 @@
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto">
           <div class="container mx-2 px-1">
-            <div style="width:100rem;height:49rem"
-                class="grid place-items-center text-gray-500 dark:text-gray-300 text-xl border-4 border-gray-300 shadow-md">
-              <div style="width:99rem;height:49rem">
+            <div style="width:100rem;height:52rem"
+                class="pt-1 grid place-items-center text-gray-500 dark:text-gray-300 text-xl border-2 border-gray-300 shadow-md">
+              <div style="width:99rem;height:52rem">
                 <slot></slot>
               </div>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <igt-feature style="height:20.35rem;padding:0rem;padding-top:1rem;width:105%" containerClass="bg-gray-200 dark:bg-gray-700">
+    <igt-feature style="height:20.45rem;padding:0rem;padding-top:1rem;width:105%" containerClass="bg-gray-200 dark:bg-gray-700">
         Skills
         <div class="pl-2 pt-1 grid grid-cols-2 grid-rows-6 border-2" style="width:96%;height:88%">
         <div style="padding-right:.25rem;font-size:1.108rem" class="row-span-1 col-span-1" :key="skill.id" v-for="skill in skills">

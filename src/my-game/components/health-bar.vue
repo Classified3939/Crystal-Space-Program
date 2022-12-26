@@ -1,19 +1,19 @@
 <template>
-    <div style="width:95%" class="overflow-hidden h-2 mb-4 text-xs flex rounded" :class="bgClass">
+    <div style="width:100%;height:100%" class="col-span-5 overflow-hidden h-2 mb-4 text-xs flex rounded" :class="bgClass">
       <div :style="{'width' : percentage * 100 + '%'}"
-           class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center"
-           :class="fgClass"></div>
+           class="shadow-none flex flex-col text-left text-xl whitespace-nowrap text-white justify-center"
+           :class="fgClass">Health</div>
     </div>
   </template>
   
   <script>
   
   export default {
-    name: "igt-progress-bar",
+    name: "health-bar",
     props: {
       percentage: {
         type: Number,
-        required: true,
+        default: 100,
       },
       bgClass: {
         type: String,
@@ -21,7 +21,7 @@
       },
       fgClass: {
         type: String,
-        default: 'bg-pink-500'
+        default: 'bg-red-600'
       },
     },
   }

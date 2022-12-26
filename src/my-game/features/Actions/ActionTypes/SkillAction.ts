@@ -34,7 +34,7 @@ export class SkillAction extends IgtAction {
     }
 
     start(): boolean {
-        if (!this.canPerform() || (this.drain > 0 && !this.adjustAmountWithFood(1e-6))) {
+        if (!this.canPerform() || (this.drain > 0 && this.adjustAmountWithFood(1e-6) === 0)) {
             this.currentProgress = 0;
             return false;
         }
@@ -47,7 +47,7 @@ export class SkillAction extends IgtAction {
     }
 
     adjustAmountWithFood(amount: number): number {
-        amount = Math.round(amount * 1e6) / 1e6
+        amount = Math.round(amount * 1e7) / 1e7
         if (this.drain <= 0) {
             return amount;
         }
@@ -59,7 +59,7 @@ export class SkillAction extends IgtAction {
         for (let i = 0; i < foodTypes.length; i++) {
             foodAmount += this._foodInventory.slots[i].amount;
         }
-        foodAmount = Math.round(foodAmount * 1e4) / 1e4;
+        foodAmount = Math.round(foodAmount * 1e6) / 1e6;
         return Math.min(amount, foodAmount);
     }
 

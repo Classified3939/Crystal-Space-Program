@@ -4,10 +4,10 @@
     <igt-sidebar title="Crystal Space Program">
       <igt-sidebar-category name="Features"></igt-sidebar-category>
       <igt-tab style="height:48rem;grid-template-rows: repeat(25, minmax(0, 1fr));" class="grid xl:grid-cols-5" name="Main" :selected="true">
-        <igt-progress-bar style="height:100%;width:100%" class="col-span-5" :percentage=100></igt-progress-bar>
-        <igt-progress-bar fgClass="bg-blue-500" style="height:100%;width:100%" class="col-span-5" :percentage=100></igt-progress-bar>
-        <skills style="grid-row-start:3;grid-row-end:12" class="m-0 pl-0"></skills>
-        <combat-tab style="grid-row-start:3;grid-row-end:12" class="col-start-2 col-span-3"></combat-tab>
+        <health-bar></health-bar>
+        <mana-bar></mana-bar>
+        <skills style="grid-row-start:3;grid-row-end:15" class="m-0 pl-0"></skills>
+        <combat-tab style="grid-row-start:3;grid-row-end:15" class="col-start-2 col-span-3"></combat-tab>
         <info-box style="grid-row-start:3;grid-column-start:5;grid-row-end:32"></info-box>
         <action-list style="grid-row-start:16" class="col-span-2" ></action-list>
         <csp-inventory style="grid-row-start:16"></csp-inventory>
@@ -53,6 +53,8 @@ import CspInventory from "@/my-game/components/csp-inventory"
 import InfoBox from "@/my-game/components/info-box"
 import LocationInfo from "@/my-game/components/location-info"
 import CombatTab from "@/my-game/components/combat-tab"
+import ManaBar from "@/my-game/components/mana-bar"
+import HealthBar from "@/my-game/components/health-bar"
 
 //from template
 import { App } from "@/App.ts";
@@ -63,7 +65,6 @@ import IgtDeveloperPanel from "@/components/developer-panel/igt-developer-panel"
 import IgtSidebarCategory from "@/components/util/sidebar/igt-sidebar-category";
 import IgtSidebarExternalLink from "@/components/util/sidebar/igt-sidebar-external-link";
 import IgtSettings from "@/components/features/settings/igt-settings";
-import IgtProgressBar from "@/components/util/igt-progress-bar"
 
 export default {
   components: {
@@ -74,13 +75,14 @@ export default {
     IgtNotifications,
     IgtTab,
     IgtSidebar,
-    IgtProgressBar,
     Skills,
     ActionList,
     CspInventory,
     InfoBox,
     LocationInfo,
     CombatTab,
+    ManaBar,
+    HealthBar,
   },
   data() {
     return {
